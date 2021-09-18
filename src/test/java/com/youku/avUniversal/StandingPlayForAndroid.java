@@ -18,7 +18,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
     private static Logger logger = LoggerFactory.getLogger( StandingPlayForAndroid.class );
 
     @Test
-    public void testPlayWithSeek() {
+    public void testStandingPlay() {
         logger.warn( "开始测试" );
         if (videoName == null || episodes == null) {
             logger.warn( "参数异常，请检查测试片源、测试剧集的传参是否正确" );
@@ -50,6 +50,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 logger.warn( "step3." + index + " 打开第" + episodes[i] + "集" );
                 if (!enterAndroidEpisode( episodes[i] )) {
                     Log.addScreenShot( "无法打开第" + episodes[i] + "集" );
+                    logger.error( "未找到需要视频" );
                     throw new Exception( "无法打开第" + episodes[i] + "集" );
                 } else {
                     TotoroUtils.sleep( 10000 );
@@ -60,7 +61,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                     Log.addScreenShot( "无法进入第" + episodes[i] + "集的全屏" );
                     throw new Exception( "无法进入第" + episodes[i] + "集的全屏" );
                 } else {
-                    TotoroUtils.sleep( 4000 );
+                    TotoroUtils.sleep( 5000 );
                 }
 
                 //logger.warn("step3." + index + " 关闭弹幕");

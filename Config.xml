@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<YKAutoTest>
+    <device>
+        <platform>ANDROID</platform>
+        <deviceType>Android</deviceType>
+        <!--<deviceId>4f80801c</deviceId>-->
+        <!--        <deviceId>55QSS8E699999999</deviceId>-->
+
+        <packageName>com.youku.phone</packageName>
+<!--        <packageName>com.tencent.qqlive</packageName>-->
+                <!--<packageName>com.qiyi.video</packageName>-->
+        <activity>ActivityWelcome</activity>
+
+    </device>
+    <device>
+        <platform>ios</platform>
+        <deviceType>iPhone</deviceType>
+        <deviceId>9da9d3a3ee4267b33b5085d0a6d00698b37e5e0a</deviceId>
+        <!--                <deviceId>1710b4693e526f2e1202dfa3e2647acbb05808cd</deviceId>-->
+        <!--        <deviceId>00008020-000158C421F8003A</deviceId>-->
+        <!--        <packageName>com.youku.YouKu</packageName>-->
+        <!--        <packageName>com.youku.YouKu.InHouse</packageName>-->
+        <!--                        <packageName>com.tencent.live4iphone</packageName>-->
+        <packageName>com.qiyi.iphone</packageName>
+    </device>
+    <device>
+        <platform>ios</platform>
+        <deviceType>iPad</deviceType>
+        <deviceId>00008027-001605DA1187002E</deviceId>
+        <packageName>com.youku.hd.InHouse</packageName>
+    </device>
+</YKAutoTest>

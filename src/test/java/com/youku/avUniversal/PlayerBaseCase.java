@@ -33,7 +33,8 @@ public class PlayerBaseCase extends ItamiBaseCase {
     public String testApp = "优酷";
     public String videoName = "鬮乆彡瓩 14";
     public String resolution = "1080P";
-    public String[] episodes = {"第52集 优酷视频质量测试"};
+    //public String[] episodes = {"第52期 : 优酷视频质量测试"};
+    public String[] episodes = {"第52期 : 优酷视频质量测试123"};
 
     @Before
     public void before() {
@@ -295,19 +296,19 @@ public class PlayerBaseCase extends ItamiBaseCase {
                     return false;
                 }
                 TotoroUtils.sleep( 2000 );
-
                 HashSet<String> episodeSet = new HashSet();
+                boolean findIt = false;
                 boolean needScroll = true;
-                WebElement targetElement = null;
                 while (needScroll) {
-                    List<WebElement> possibleElements =waitForElements( driver, "android.widget.ImageView", 5 );
+                    List<WebElement> possibleElements = waitForElements( driver, "android.widget.ImageView", 5 );
                     boolean allIn = true;
-                    for (WebElement element : possibleElements) {
-                        if (element != null) {
+                    if (possibleElements != null) {
+                        for (WebElement element : possibleElements) {
                             String text = element.getAttribute( "content-desc" );
-                            if (text.contains( episode )) {
+                            if (text != null && text.contains( episode )) {
                                 needScroll = false;
-                                targetElement = element;
+                                findIt = true;
+                                element.click();
                                 break;
                             } else {
                                 if (!episodeSet.contains( text )) {
@@ -317,19 +318,14 @@ public class PlayerBaseCase extends ItamiBaseCase {
                             }
                         }
                     }
-                    if (allIn) {
+                    if (allIn || findIt) {
                         needScroll = false;
+                    } else {
+                        scrollUp();
+                        TotoroUtils.sleep( 500 );
                     }
-
-
                 }
-                if (targetElement != null) {
-                    targetElement.click();
-                } else {
-                    logger.warn( "没有找到指定剧集" );
-                }
-
-
+                return findIt;
             } else {
                 WebElement moreBtn = waitForElement( driver, Constant.NOT_YOUKU_MORE_BTN_NAME_ANDROID, 5 );
                 if (moreBtn != null) {
@@ -533,17 +529,10 @@ public class PlayerBaseCase extends ItamiBaseCase {
         } else {
             resolutionSetBtnInfo = Constant.YOUKU_RESOLUTION_BTN_ID_ANDROID;
         }
-
-        float[] coor = getClickCoordinate( driver, true, 0.5, 0.5 );
-        if (coor == null) {
-            logger.warn( "全屏播放时获取播放器点击坐标出错" );
-            return false;
-        }
-
         int times = 5;
         WebElement definitionBtn = null;
         while (times > 0) {
-            driver.click( coor[0], coor[1] );
+            driver.click( 200, 200 );
             TotoroUtils.sleep( 1000 );
             definitionBtn = waitForElement( driver, resolutionSetBtnInfo, 4 );
             if (definitionBtn != null) {
@@ -821,6 +810,6 @@ public class PlayerBaseCase extends ItamiBaseCase {
         Dimension screenSize = driver.getScreenSize();
         int screenHeight = screenSize.getHeight();
         int screenWidth = screenSize.getWidth();
-        driver.swipe( screenWidth / 2f, screenHeight * 0.7, screenWidth / 2f, screenHeight * 0.7, 1000 );
+        driver.swipe( screenWidth / 2f, screenHeight * 0.7, screenWidth / 2f, screenHeight * 0.3, 1000 );
     }
 }

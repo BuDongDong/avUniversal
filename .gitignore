@@ -3,4 +3,14 @@ screenshot
 itamilogs
 report
 avUniversal.iml
-
+target
+logs
+bin
+ItamiScreenshot
+*.mp4
+*.yml
+*.log
+*.json
+*.txt
+*.css
+*.properties
