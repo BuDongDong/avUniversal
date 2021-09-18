@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.youku.test</groupId>
+    <artifactId>avUniversal</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+
+        <!-- 为了避免被覆盖掉，放在靠前的位置-->
+        <dependency>
+            <groupId>com.youku.yk_client_arch</groupId>
+            <artifactId>itami_framework</artifactId>
+            <version>2.2.20.29.avUniversal-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-jdk14</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <reportOutputDirectory>${project.basedir}</reportOutputDirectory>
+                    <destDir>docs</destDir>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <repositories>
+                <!--Alibaba-group-->
+                <repository>
+                    <id>taobao-repo</id>
+                    <name>taobao Repositories Group</name>
+                    <url>http://repo.alibaba-inc.com/nexus/content/groups/alirepositiry/</url>
+                </repository>
+                <repository>
+                    <id>alibaba-repo</id>
+                    <name>Alibaba Repositories Group</name>
+                    <url>http://mvnrepo.alibaba-inc.com/mvn/repository/</url>
+                </repository>
+
+                <!--  alipay  -->
+                <!-- test -->
+                <repository>
+                    <id>test-alipay-mobile</id>
+                    <url>http://mvn.test.alipay.net/artifactory/content/groups/alipay-mobile</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+                <repository>
+                    <id>test-central</id>
+                    <url>http://mvn.test.alipay.net/artifactory/content/repositories/central</url>
+                </repository>
+                <repository>
+                    <id>test-mobile</id>
+                    <url>http://mvn.test.alipay.net/artifactory/content/repositories/mobile/</url>
+                </repository>
+                <!-- dev -->
+                <repository>
+                    <id>dev-central</id>
+                    <url>http://mvn.dev.alipay.net/artifactory/content/repositories/central</url>
+                </repository>
+                <repository>
+                    <id>dev-alipay</id>
+                    <url>http://mvn.dev.alipay.net/artifactory/content/groups/alipay-mobile</url>
+                </repository>
+                <repository>
+                    <id>dev-mobile</id>
+                    <url>http://mvn.dev.alipay.net:8081/artifactory/content/repositories/mobile</url>
+                </repository>
+                <!-- mobile-snapshot -->
+                <repository>
+                    <id>mobile-snapshot</id>
+                    <url>http://mvn.dev.alipay.net/artifactory/content/repositories/mobile-snapshot</url>
+                </repository>
+                <!--下面的配置和口碑/航旅/财富/搜索专有库，为了效率默认注释掉了,需要时根据业务自行去掉注释-->
+                <!--  koubei  -->
+                <!--repository>
+                  <id>test-koubei</id>
+                  <url>http://mvn.test.alipay.net/artifactory/content/groups/koubei-group</url>
+                </repository>
+                <repository>
+                  <id>dev-koubei</id>
+                  <url>http://mvn.dev.alipay.net/artifactory/content/groups/koubei-group</url>
+                </repository-->
+                <!-- alitrip -->
+                <!--repository>
+                  <id>test-alitrip</id>
+                  <url>http://mvn.test.alipay.net/artifactory/content/groups/alitrip-group</url>
+                </repository-->
+                <!--  wealth  -->
+                <!--repository>
+                  <id>test-wealth</id>
+                  <url>http://mvn.test.alipay.net/artifactory/content/groups/wealth-group</url>
+                </repository-->
+                <!--  alisearch  -->
+                <!--repository>
+                  <id>test-alisearch</id>
+                  <url>http://mvn.test.alipay.net/artifactory/content/groups/alisearch-group</url>
+                </repository-->
+
+                <!-- bintray  -->
+                <repository>
+                    <id>central-bintray</id>
+                    <url>http://jcenter.bintray.com</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <!--  apache  -->
+                <repository>
+                    <id>central_apache</id>
+                    <url>http://repository.apache.org/snapshots/</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <!-- alipay relase (dependency missing!)-->
+                <repository>
+                    <id>alipay-release</id>
+                    <url>http://mvn.dev.alipay.net/artifactory/content/repositories/Alipay-Releases</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </repository>
+                <!--<repository><id>repo.jenkins-ci.org</id><url>http://repo.jenkins-ci.org/public/</url></repository>-->
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>ali-centeral-repo</id>
+                    <url>http://repo.alibaba-inc.com/nexus/content/repositories/central</url>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>sontype-centeral-repo</id>
+                    <url>http://repo1.maven.org/maven2/</url>
+                </pluginRepository>
+                <pluginRepository>
+                    <id>central</id>
+                    <url>http://mvn.dev.alipay.net:8080/artifactory/repo</url>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                </pluginRepository>
+                <pluginRepository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central-bintray</id>
+                    <url>http://jcenter.bintray.com</url>
+                </pluginRepository>
+                <!--
+                <pluginRepository>
+                  <id>taobao-repo</id>
+                  <name>Alibaba Repositories Group</name>
+                  <url>http://repo.alibaba-inc.com/nexus/content/groups/alirepositiry/</url>
+                </pluginRepository>
+                <pluginRepository>
+                  <id>alibaba-repo</id>
+                  <name>Alibaba Repositories Group</name>
+                  <url>http://mvnrepo.alibaba-inc.com/mvn/repository/</url>
+                </pluginRepository>
+                -->
+            </pluginRepositories>
+        </profile>
+
+        <!-- For pure sofa project -->
+        <!--<profile>-->
+        <!--<id>dev2</id>-->
+        <!--<activation>-->
+        <!--<activeByDefault>false</activeByDefault>-->
+        <!--</activation>-->
+        <!--<repositories>-->
+        <!--<repository>-->
+        <!--<id>central_prod</id>-->
+        <!--<url>http://mvn.test.alipay.net:8080/artifactory/repo</url>-->
+        <!--<snapshots>-->
+        <!--<enabled>true</enabled>-->
+        <!--</snapshots>-->
+        <!--</repository>-->
+        <!--<repository>-->
+        <!--<id>central</id>-->
+        <!--<url>http://mvn.dev.alipay.net:8080/artifactory/repo</url>-->
+        <!--<snapshots>-->
+        <!--<enabled>true</enabled>-->
+        <!--</snapshots>-->
+        <!--</repository>-->
+        <!--<repository>-->
+        <!--<id>releases</id>-->
+        <!--<url>http://mvnrepo.alibaba-inc.com/mvn/releases</url>-->
+        <!--</repository>-->
+        <!--<repository>-->
+        <!--<id>snapshots</id>-->
+        <!--<url>http://mvnrepo.alibaba-inc.com/mvn/snapshots</url>-->
+        <!--</repository>-->
+        <!--<repository>-->
+        <!--<id>snapshots</id>-->
+        <!--<url>http://mvn.dev.alipay.net:8080/artifactory/repo</url>-->
+        <!--<releases>-->
+        <!--<enabled>true</enabled>-->
+        <!--</releases>-->
+        <!--</repository>-->
+        <!--</repositories>-->
+        <!--<pluginRepositories>-->
+        <!--<pluginRepository>-->
+        <!--<id>central</id>-->
+        <!--<url>http://mvn.dev.alipay.net:8080/artifactory/repo</url>-->
+        <!--<snapshots>-->
+        <!--<enabled>false</enabled>-->
+        <!--</snapshots>-->
+        <!--</pluginRepository>-->
+        <!--</pluginRepositories>-->
+        <!--</profile>-->
+    </profiles>
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <url>http://mvnrepo.alibaba-inc.com/mvn/releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://mvnrepo.alibaba-inc.com/mvn/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <properties>
+        <aspectj.version>1.8.10</aspectj.version>
+    </properties>
+
+</project>
