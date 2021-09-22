@@ -1,5 +1,6 @@
 package com.youku.avUniversal.TestSuite;
 
+import com.youku.avUniversal.StandingPlayForAndroid;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -10,7 +11,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-    StandingPlayForAndroidTestSuite.class
+    StandingPlayForAndroid.class
 })
 
 public class StandingPlayForAndroidTestSuite {
