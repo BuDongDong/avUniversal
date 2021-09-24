@@ -33,8 +33,8 @@ public class PlayerBaseCase extends ItamiBaseCase {
     public String testApp = "优酷";
     public String videoName = "鬮乆彡瓩 14";
     public String resolution = "1080P";
-    //public String[] episodes = {"第52期 : 优酷视频质量测试"};
-    public String[] episodes = {"第52期 : 优酷视频质量测试123"};
+    public String[] episodes = {"第52期 : 优酷视频质量测试"};
+    //public String[] episodes = {"第52期 : 优酷视频质量测试123"};
 
     @Before
     public void before() {
