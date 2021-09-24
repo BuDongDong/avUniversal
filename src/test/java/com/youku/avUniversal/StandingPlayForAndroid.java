@@ -2,6 +2,7 @@ package com.youku.avUniversal;
 
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.CmdExecutor;
+import com.youku.itami.logic.other.YoukuLogin;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import java.util.Date;
 public class StandingPlayForAndroid extends PlayerBaseCase {
 
     private static Logger logger = LoggerFactory.getLogger( StandingPlayForAndroid.class );
+    private String deviceId = " -s c4c4c852 ";
 
     @Test
     public void testStandingPlay() {
@@ -24,6 +26,8 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             logger.warn( "参数异常，请检查测试片源、测试剧集的传参是否正确" );
             return;
         }
+        //
+        //YoukuLogin(itamiBaseCase, )
 
         logger.warn( "step1: 进入" + testApp + "搜索页" );
         if (!openAndroidSearchPage()) {
@@ -77,12 +81,10 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 logger.warn( "step3." + index + " 开始录像" );
                 CmdExecutor cmdExecutor = new CmdExecutor();
                 // -s 指定不同手机
-                String deviceId = " ";
                 String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
                 String cmd = String.format( "scrcpy%s--max-fps 60 --bit-rate 2M --max-size 1080 -Nr %s.mp4", deviceId,
                     time );
-                int exitCode = cmdExecutor.execCmd(cmd, null, 10);
-
+                int exitCode = cmdExecutor.execCmd( cmd, null, 100 );
 
                 logger.warn( "step3." + index + " 结束录像" );
 
