@@ -85,6 +85,7 @@ public class CmdExecutor {
                 if (pid != -1) {
                     Process killer = Runtime.getRuntime().exec( String.format( "kill -SIGINT %d", pid ) );
                     killer.waitFor();
+                    System.out.println("+++++++++kill pid=" + pid);
                 }
                 processWorker.interrupt();
             }
