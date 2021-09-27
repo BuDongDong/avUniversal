@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,6 +20,20 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
     private static Logger logger = LoggerFactory.getLogger( StandingPlayForAndroid.class );
     //private String deviceId = " ";
     private String deviceId = " -s c4c4c852 ";
+
+    @Test
+    public void test(){
+        CmdExecutor cmdExecutor = new CmdExecutor();
+        // -s 指定不同手机
+        String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
+        String cmd = String.format( "/usr/local/bin/scrcpy%s--max-fps 60 --bit-rate 2M --max-size 1080 -Nr %s.mp4", deviceId,time );
+        try {
+            int exitCode = cmdExecutor.execCmd( cmd, null, 30 );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Test
     public void testStandingPlay() {
@@ -83,7 +98,6 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 CmdExecutor cmdExecutor = new CmdExecutor();
                 // -s 指定不同手机
                 String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
-                //String cmd = String.format( "scrcpy%s--max-fps 60 --bit-rate 2M --max-size 1080 -Nr %s.mp4", deviceId,
                 String cmd = String.format( "scrcpy%s--max-fps 60 --bit-rate 2M --max-size 1080 -Nr /Users/yktest/av-test/record/%s.mp4", deviceId,
                     time );
                 int exitCode = cmdExecutor.execCmd( cmd, null, 30 );

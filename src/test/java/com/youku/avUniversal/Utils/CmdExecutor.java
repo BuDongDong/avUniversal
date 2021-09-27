@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 
 public class CmdExecutor {
 
@@ -68,6 +69,8 @@ public class CmdExecutor {
         // 合并错误输出流
         processBuilder.redirectErrorStream( true );
         Process process = processBuilder.start();
+        long pid = getPidOfProcess( process );
+        System.out.println( "+++++++++" + pid );
         ProcessWorker processWorker = new ProcessWorker( process );
         int exitCode = processWorker.getExitCode();
         processWorker.start();
@@ -79,6 +82,10 @@ public class CmdExecutor {
                 }
                 exitCode = processWorker.getExitCode();
             } else {
+                if (pid != -1) {
+                    Process killer = Runtime.getRuntime().exec( String.format( "kill -SIGINT %d", pid ) );
+                    killer.waitFor();
+                }
                 process.destroyForcibly();
                 processWorker.interrupt();
             }
@@ -86,5 +93,21 @@ public class CmdExecutor {
             processWorker.interrupt();
         }
         return exitCode;
+    }
+
+    public static long getPidOfProcess(Process p) {
+        long pid = -1;
+
+        try {
+            if (p.getClass().getName().equals( "java.lang.UNIXProcess" )) {
+                Field f = p.getClass().getDeclaredField( "pid" );
+                f.setAccessible( true );
+                pid = f.getLong( p );
+                f.setAccessible( false );
+            }
+        } catch (Exception e) {
+            pid = -1;
+        }
+        return pid;
     }
 }
