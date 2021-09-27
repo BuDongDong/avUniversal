@@ -17,6 +17,7 @@ import java.util.Date;
 public class StandingPlayForAndroid extends PlayerBaseCase {
 
     private static Logger logger = LoggerFactory.getLogger( StandingPlayForAndroid.class );
+    //private String deviceId = " ";
     private String deviceId = " -s c4c4c852 ";
 
     @Test
@@ -82,9 +83,10 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 CmdExecutor cmdExecutor = new CmdExecutor();
                 // -s 指定不同手机
                 String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
+                //String cmd = String.format( "scrcpy%s--max-fps 60 --bit-rate 2M --max-size 1080 -Nr %s.mp4", deviceId,
                 String cmd = String.format( "scrcpy%s--max-fps 60 --bit-rate 2M --max-size 1080 -Nr /Users/yktest/av-test/record/%s.mp4", deviceId,
                     time );
-                int exitCode = cmdExecutor.execCmd( cmd, null, 100 );
+                int exitCode = cmdExecutor.execCmd( cmd, null, 30 );
 
                 logger.warn( "step3." + index + " 结束录像" );
 

@@ -79,7 +79,7 @@ public class CmdExecutor {
                 }
                 exitCode = processWorker.getExitCode();
             } else {
-                process.destroy();
+                process.destroyForcibly();
                 processWorker.interrupt();
             }
         } catch (InterruptedException e) {
