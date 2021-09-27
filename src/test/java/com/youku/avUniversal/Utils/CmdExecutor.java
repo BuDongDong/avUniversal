@@ -86,7 +86,6 @@ public class CmdExecutor {
                     Process killer = Runtime.getRuntime().exec( String.format( "kill -SIGINT %d", pid ) );
                     killer.waitFor();
                 }
-                //process.destroyForcibly();
                 processWorker.interrupt();
             }
         } catch (InterruptedException e) {
