@@ -43,9 +43,9 @@ public class CmdExecutor {
                     logger.warn( new String( buffer ) );
                 }
                 output = log.toString();
-                exitCode = process.waitFor();
+                //exitCode = process.waitFor();
                 completed = true;
-            } catch (InterruptedException | IOException e) {
+            } catch (Exception e) {
                 Thread.currentThread().interrupt();
             }
         }
