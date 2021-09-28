@@ -58,7 +58,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
         }
         logger.warn( "测试准备: 当前测试应用为" + testApp );
 
-        String otherArgStr = System.getenv( "otherArgs" );
+        String otherArgStr = System.getenv( "extraArgs" );
         System.out.println( "otherArgStr: " + otherArgStr );
         if (otherArgStr != null && !otherArgStr.isEmpty()) {
             JSONObject otherArgs = JSONObject.parseObject( otherArgStr );
