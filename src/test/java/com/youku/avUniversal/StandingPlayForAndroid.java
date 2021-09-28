@@ -24,7 +24,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
         CmdExecutor cmdExecutor = new CmdExecutor();
         // -s 指定不同手机
         String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
-        String cmd = String.format( "scrcpy%s--max-fps 60 --bit-rate 2M --max-size 1080 -Nr %s.mp4", deviceId, time );
+        String cmd = String.format( "scrcpy%s--max-fps 60 --bit-rate 2M --max-size 1080 -Nr /Users/yktest/av-test/record/%s.mp4", deviceId, time );
         logger.warn( "命令:" + cmd );
 
         try {
