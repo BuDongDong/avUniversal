@@ -82,11 +82,11 @@ public class CmdExecutor {
                 }
                 exitCode = processWorker.getExitCode();
             } else {
-                //if (pid != -1) {
-                //    Process killer = Runtime.getRuntime().exec( String.format( "kill -SIGINT %d", pid ) );
-                //    killer.waitFor();
-                //    System.out.println("+++++++++kill pid=" + pid);
-                //}
+                if (pid != -1) {
+                    Process killer = Runtime.getRuntime().exec( String.format( "kill -SIGINT %d", pid ) );
+                    killer.waitFor();
+                    System.out.println("+++++++++kill pid=" + pid);
+                }
                 processWorker.interrupt();
             }
         } catch (InterruptedException e) {

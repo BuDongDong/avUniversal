@@ -32,6 +32,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        logger.warn( "结束测试" );
     }
 
 
