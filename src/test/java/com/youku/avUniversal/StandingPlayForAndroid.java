@@ -2,12 +2,10 @@ package com.youku.avUniversal;
 
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.CmdExecutor;
-import com.youku.itami.logic.other.YoukuLogin;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,7 +24,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
         CmdExecutor cmdExecutor = new CmdExecutor();
         // -s 指定不同手机
         String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
-        String cmd = String.format( "/usr/local/bin/scrcpy --max-fps 60 --bit-rate 2M --max-size 1080 -Nr %s.mp4",time );
+        String cmd = String.format( "scrcpy%s--max-fps 60 --bit-rate 2M --max-size 1080 -Nr %s.mp4", deviceId, time );
         try {
             int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 30 );
         } catch (Exception e) {
