@@ -28,7 +28,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
         logger.warn( "命令:" + cmd );
 
         try {
-            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 300 );
+            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 30 );
         } catch (Exception e) {
             e.printStackTrace();
         }
