@@ -1,26 +1,18 @@
 package com.youku.avUniversal;
 
 import com.totoro.client.deeplearning.adstract.OcrElement;
-import com.totoro.client.utils.ADBCommandUtils;
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.CmdExecutor;
 import com.youku.avUniversal.Utils.Constant;
-import com.youku.itami.core.ItamiBaseCase;
 import com.youku.itami.utility.ImgHandler.ImageML.ImageML;
 import com.youku.itami.utility.ImgHandler.ScreenShot;
-import mirror.MirrorImage;
-import model.OcrModel;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * @author 庭婳（meifang.ymf@alibaba-inc.com）
@@ -35,7 +27,7 @@ public class StandingPlayForAndroidOCR extends PlayerBaseCase {
     @Test
     public void testStandingPlay() {
         logger.warn( "开始测试" );
-        if (videoName == null || episodes == null) {
+        if (showName == null || videoName == null) {
             logger.warn( "参数异常，请检查测试片源、测试剧集的传参是否正确" );
             return;
         }
@@ -51,7 +43,7 @@ public class StandingPlayForAndroidOCR extends PlayerBaseCase {
             TotoroUtils.sleep( 2000 );
         }
 
-        logger.warn( "step2：搜索片源 " + videoName );
+        logger.warn( "step2：搜索片源 " + showName );
 
         String textItemInfo = null;
         if (testApp.equals( "优酷" )) {
@@ -62,7 +54,7 @@ public class StandingPlayForAndroidOCR extends PlayerBaseCase {
         WebElement searchTextEle = waitForElement( driver, textItemInfo, 5 );
         if (searchTextEle != null) {
             searchTextEle.click();
-            searchTextEle.sendKeys( videoName );
+            searchTextEle.sendKeys( showName );
         } else {
             logger.warn( "未找到搜索输入框" );
             Log.addScreenShot( "未找到搜索输入框" );
@@ -91,18 +83,18 @@ public class StandingPlayForAndroidOCR extends PlayerBaseCase {
         }
 
         logger.warn( "step3：开始查找指定视频" );
-        if (episodes.length == 0) {
+        if (videoName != null) {
             logger.warn( "未指定测试视频" );
             return;
         }
         try {
-            logger.warn( "step3.1 打开: " + episodes[0] );
+            logger.warn( "step3.1 打开: " + videoName );
             String baseImage = ScreenShot.ScreenShot( itamiBaseCase );
 
             boolean findIt = false;
             int counter = 0;
             while (counter < 20) {
-                ocrElement = ImageML.itamiOcrElement( episodes[0].replaceAll( " ", "" ) );
+                ocrElement = ImageML.itamiOcrElement( videoName.replaceAll( " ", "" ) );
                 if (ocrElement != null) {
                     logger.warn( "找到指定视频并点击" );
                     ocrElement.click( driver );

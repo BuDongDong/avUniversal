@@ -5,6 +5,7 @@ package com.youku.avUniversal;
  * @date 2021/9/18 1:41 PM
  */
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.totoro.client.internal.MobileDriver;
 import com.totoro.client.utils.ADBCommandUtils;
@@ -30,11 +31,11 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     private static Logger logger = LoggerFactory.getLogger( PlayerBaseCase.class );
 
+    public String exeId = "null";
     public String testApp = "优酷";
-    public String videoName = "鬮乆彡瓩 14";
+    public String showName = "鬮乆彡瓩 14";
+    public String videoName = "第52期 : 优酷视频质量测试";
     public String resolution = "1080P";
-    public String[] episodes = {"第52期 : 优酷视频质量测试"};
-    //public String[] episodes = {"第52期 : 优酷视频质量测试123"};
 
     @Before
     public void before() {
@@ -61,27 +62,25 @@ public class PlayerBaseCase extends ItamiBaseCase {
         String otherArgStr = System.getenv( "extraArgs" );
         System.out.println( "otherArgStr: " + otherArgStr );
         if (otherArgStr != null && !otherArgStr.isEmpty()) {
-            JSONObject otherArgs = JSONObject.parseObject( otherArgStr );
-
-            //videoName = System.getenv("VIDEO_SOURCE");
-            videoName = otherArgs.getString( "videoSource" );
-            logger.error( "测试准备: 测试视频为" + videoName );
-
-            //resolution = System.getenv("STREAMTYPE");
-            resolution = otherArgs.getString( "streamType" );
-            logger.error( "测试准备: 测试分辨率为" + resolution );
-            if (resolution == null || resolution.equals( "" )) {
-                logger.error( "测试准备: 测试分辨率没有获取成功" );
-                resolution = "1080P";
+            try {
+                JSONObject otherArgs = JSONObject.parseObject( otherArgStr );
+                exeId = otherArgs.getString( "exeId" );
+                JSONArray paramArray = JSONArray.parseArray( otherArgs.getString( "params" ) );
+                for (Object each : paramArray) {
+                    if ("showName".equals( ((JSONObject)each).getString( "name" ) )) {
+                        showName = ((JSONObject)each).getString( "value" );
+                        logger.warn( "设置showName: " + showName );
+                    } else if ("videoName".equals( ((JSONObject)each).getString( "name" ) )) {
+                        videoName = ((JSONObject)each).getString( "value" );
+                        logger.warn( "设置videoName: " + videoName );
+                    } else if ("videoFormat".equals( ((JSONObject)each).getString( "name" ) )) {
+                        resolution = ((JSONObject)each).getString( "value" );
+                        logger.warn( "设置resolution: " + resolution );
+                    }
+                }
+            } catch (Exception e) {
+                logger.error( "extraArgs解析失败: " + otherArgStr );
             }
-
-            //String series = System.getenv("VIDEO_SERIES");
-            String series = otherArgs.getString( "videoSeries" );
-            logger.error( "测试准备: 测试剧集为" + series );
-            if (series != null && !series.equals( "" )) {
-                episodes = series.split( "," );
-            }
-
         }
 
         driver.manage().timeouts().implicitlyWait( 1, TimeUnit.SECONDS );
@@ -222,7 +221,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     public boolean searchVideoInIphone() {
         if (testApp.equals( "优酷" )) {
-            Router.IphoneSchemeLaunch( driver, Constant.YOUKU_SEARCH_SCHEME_TEXT + videoName );
+            Router.IphoneSchemeLaunch( driver, Constant.YOUKU_SEARCH_SCHEME_TEXT + showName );
         } else {
             String searchInfo;
             if (testApp.equals( "爱奇艺" )) {
@@ -232,7 +231,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
             }
             WebElement searchItem = waitForElementIphone( driver, searchInfo, 5 );
             if (searchItem != null) {
-                searchItem.sendKeys( videoName );
+                searchItem.sendKeys( showName );
             }
         }
         return true;
@@ -248,7 +247,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
         WebElement searchTextEle = waitForElement( driver, textItemInfo, 5 );
         if (searchTextEle != null) {
             searchTextEle.click();
-            searchTextEle.sendKeys( videoName );
+            searchTextEle.sendKeys( showName );
         } else {
             logger.warn( "未找到搜索输入框" );
             return false;
