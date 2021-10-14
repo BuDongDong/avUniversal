@@ -349,7 +349,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
                         findIt = true;
                     } else {
                         //target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode.jpg" );
-                        IDLRect target = ImageML.itamiImageSearchInCurrentScreenByIcon( choose_episode_url );
+                        target = ImageML.itamiImageSearchInCurrentScreenByIcon( choose_episode_url );
                         if (target != null) {
                             driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
                             System.out.println( target );
