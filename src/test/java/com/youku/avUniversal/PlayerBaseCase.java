@@ -39,6 +39,11 @@ public class PlayerBaseCase extends ItamiBaseCase {
     public String videoName = "第52期 : 优酷视频质量测试";
     public String resolution = "1080P";
 
+    private String more_dot_url = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/more_dot.jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563354&Signature=s2KjfIazxi8zSCR2KJnd%2BmujbDY%3D";
+    private String choose_episode_url = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/choose_episode.jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563266&Signature=lUlKwCJWIDzomby91fVk5ETOYOw%3D";
+    private String choose_episode_playing_url = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/choose_episode_playing.jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563381&Signature=y68lIqlQATTa2tTH7uSTt%2FlbZuQ%3D";
+
+
     @Before
     public void before() {
         if (DEVICE.getPlatform().equalsIgnoreCase( "ios" )) {
@@ -293,7 +298,8 @@ public class PlayerBaseCase extends ItamiBaseCase {
                 if (null != episodeBtns && !episodeBtns.isEmpty()) {
                     episodeBtns.get( 0 ).click(); //点击更多按钮
                 } else {
-                    IDLRect target = ImageML.itamiImageSearchInCurrentScreen( "more_dot.jpg" );
+                    //IDLRect target = ImageML.itamiImageSearchInCurrentScreen( "more_dot.jpg" );
+                    IDLRect target = ImageML.itamiImageSearchInCurrentScreenByIcon( more_dot_url );
                     logger.warn( "尝试图像识别" );
                     if (target != null) {
                         driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
@@ -335,13 +341,15 @@ public class PlayerBaseCase extends ItamiBaseCase {
                 }
                 if (!findIt) {
                     logger.warn( "尝试图像识别" );
-                    IDLRect target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode_playing.jpg" );
+                    //IDLRect target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode_playing.jpg" );
+                    IDLRect target = ImageML.itamiImageSearchInCurrentScreenByIcon( choose_episode_playing_url );
                     if (target != null) {
                         driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
                         System.out.println( target );
                         findIt = true;
                     } else {
-                        target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode.jpg" );
+                        //target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode.jpg" );
+                        IDLRect target = ImageML.itamiImageSearchInCurrentScreenByIcon( choose_episode_url );
                         if (target != null) {
                             driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
                             System.out.println( target );
