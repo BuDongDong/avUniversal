@@ -7,12 +7,14 @@ package com.youku.avUniversal;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.totoro.client.deeplearning.adstract.IDLRect;
 import com.totoro.client.internal.MobileDriver;
 import com.totoro.client.utils.ADBCommandUtils;
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.Constant;
 import com.youku.itami.core.ItamiBaseCase;
 import com.youku.itami.core.Router;
+import com.youku.itami.utility.ImgHandler.ImageML.ImageML;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.Dimension;
@@ -291,8 +293,13 @@ public class PlayerBaseCase extends ItamiBaseCase {
                 if (null != episodeBtns && !episodeBtns.isEmpty()) {
                     episodeBtns.get( 0 ).click(); //点击更多按钮
                 } else {
-                    logger.warn( "未找到更多按钮" );
-                    return false;
+                    IDLRect target = ImageML.itamiImageSearchInCurrentScreen( "more_dot.jpg" );
+                    if (target != null) {
+                        driver.click( target.getX() + 10, target.getY() + 10 ); //点击更多按钮
+                    } else {
+                        logger.warn( "未找到更多按钮" );
+                        return false;
+                    }
                 }
                 TotoroUtils.sleep( 2000 );
                 HashSet<String> episodeSet = new HashSet();
@@ -322,6 +329,19 @@ public class PlayerBaseCase extends ItamiBaseCase {
                     } else {
                         scrollUp();
                         TotoroUtils.sleep( 500 );
+                    }
+                }
+                if (!findIt) {
+                    IDLRect target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode_playing.jpg" );
+                    if (target != null) {
+                        driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
+                        findIt = true;
+                    } else {
+                        target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode.jpg" );
+                        if (target != null) {
+                            driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
+                            findIt = true;
+                        }
                     }
                 }
                 return findIt;

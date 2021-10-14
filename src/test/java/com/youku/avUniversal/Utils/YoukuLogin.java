@@ -90,8 +90,18 @@ public class YoukuLogin {
         } catch (Exception e) {
             System.out.println( "弹出了登录框了" );
         }
+        TotoroUtils.sleep( 2000 );
         try {
-            WebElement AccountLoginButton = driver.findElementByName( "账号登录" );
+            driver.findElementByIdWithoutExp( "com.youku.phone:id/passport_login_protocol_checkbox" ).click();
+        } catch (Exception e) {
+            logger.warn( "没有出现隐私权限勾选框" );
+        }
+        try {
+            WebElement AccountLoginButton = driver.findElementByName( "手机号登录" );
+            if (AccountLoginButton.isDisplayed()) {
+                AccountLoginButton.click();
+            }
+            AccountLoginButton = driver.findElementByName( "账号登录" );
             if (AccountLoginButton.isDisplayed()) {
                 AccountLoginButton.click();
             }
@@ -120,12 +130,6 @@ public class YoukuLogin {
             ScretNumber.sendKeys( scretNumber );
         } catch (Exception e) {
             System.out.println( "未找到低端机器密码输入框" );
-        }
-        TotoroUtils.sleep( 2000 );
-        try {
-            driver.findElementByIdWithoutExp( "com.youku.phone:id/aliuser_reg_checkbox" ).click();
-        } catch (Exception e) {
-            logger.warn( "没有出现隐私权限勾选框" );
         }
         TotoroUtils.sleep( 5000 );
         driver.findElementByNameWithoutExp( "登录" ).click();

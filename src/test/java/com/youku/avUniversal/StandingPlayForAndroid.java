@@ -2,6 +2,7 @@ package com.youku.avUniversal;
 
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.CmdExecutor;
+import com.youku.avUniversal.Utils.YoukuLogin;
 import com.youku.itami.utility.OssUpload.FileTypeEnum;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -37,14 +38,6 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
     //    logger.warn( "结束测试" );
     //}
 
-    //@Test
-    //public void testLogin() {
-    //
-    //    YoukuLogin.login( itamiBaseCase, );
-    //
-    //    logger.warn( "结束测试" );
-    //}
-
     @Test
     public void testStandingPlay() {
         logger.warn( "开始测试" );
@@ -52,6 +45,11 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             logger.warn( "参数异常，请检查测试片源、测试剧集的传参是否正确" );
             return;
         }
+
+        //YoukuLogin.login( itamiBaseCase, "13161700207", "youkuvip123" );
+        //driver.closeApp( DEVICE.getPackageName() );
+        //driver.launchApp( DEVICE.getPackageName() );
+        //TotoroUtils.sleep( 8000 );
 
         logger.warn( "step1: 进入" + testApp + "搜索页" );
         if (!openAndroidSearchPage()) {
@@ -112,14 +110,14 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             logger.warn( "命令:" + cmd );
 
             try {
-                String ossUrl = ossUpload.uploadFileToLongTerm( "/Users/yuxuefei/Downloads/monkeyTestNew20210906",
-                    "monkeyTestNew20210906", FileTypeEnum.ITAMI );
+                String ossUrl = ossUpload.uploadFileToLongTerm( "/Users/yktest/av-test/record/",
+                    recordFileName, FileTypeEnum.ITAMI );
             } catch (Throwable throwable) {
                 logger.error( "上传oss失败" );
                 throwable.printStackTrace();
             }
 
-            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 30 );
+            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 60 );
 
             logger.warn( "step3.5 结束录像" );
 
