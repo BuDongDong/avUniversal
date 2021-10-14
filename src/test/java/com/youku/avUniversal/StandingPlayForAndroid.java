@@ -108,6 +108,8 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 recordFileName );
             logger.warn( "命令:" + cmd );
 
+            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 60 );
+
             try {
                 String ossUrl = ossUpload.uploadFileToLongTerm( "/Users/yktest/av-test/record/",
                     recordFileName, FileTypeEnum.ITAMI );
@@ -116,8 +118,6 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 logger.error( "上传oss失败" );
                 throwable.printStackTrace();
             }
-
-            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 60 );
 
             logger.warn( "step3.5 结束录像" );
 
