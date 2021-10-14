@@ -112,6 +112,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             try {
                 String ossUrl = ossUpload.uploadFileToLongTerm( "/Users/yktest/av-test/record/",
                     recordFileName, FileTypeEnum.ITAMI );
+                logger.warn( "录屏ossUrl:" + ossUrl );
             } catch (Throwable throwable) {
                 logger.error( "上传oss失败" );
                 throwable.printStackTrace();
