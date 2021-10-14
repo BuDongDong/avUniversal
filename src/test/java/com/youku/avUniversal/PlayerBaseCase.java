@@ -294,8 +294,10 @@ public class PlayerBaseCase extends ItamiBaseCase {
                     episodeBtns.get( 0 ).click(); //点击更多按钮
                 } else {
                     IDLRect target = ImageML.itamiImageSearchInCurrentScreen( "more_dot.jpg" );
+                    logger.warn( "尝试图像识别" );
                     if (target != null) {
-                        driver.click( target.getX() + 10, target.getY() + 10 ); //点击更多按钮
+                        driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
+                        System.out.println( target );
                     } else {
                         logger.warn( "未找到更多按钮" );
                         return false;
@@ -332,14 +334,17 @@ public class PlayerBaseCase extends ItamiBaseCase {
                     }
                 }
                 if (!findIt) {
+                    logger.warn( "尝试图像识别" );
                     IDLRect target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode_playing.jpg" );
                     if (target != null) {
                         driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
+                        System.out.println( target );
                         findIt = true;
                     } else {
                         target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode.jpg" );
                         if (target != null) {
                             driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
+                            System.out.println( target );
                             findIt = true;
                         }
                     }
