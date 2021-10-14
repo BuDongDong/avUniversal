@@ -95,7 +95,6 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             logger.warn( "step3.3 设置分辨率为" + resolution );
             if (!setResolutionAndroid()) {
                 Log.addScreenShot( "第" + videoName + "集设置清晰度失败" );
-                throw new Exception( "第" + videoName + "集设置清晰度失败" );
             }
 
             logger.warn( "step3.4 开始录像" );
