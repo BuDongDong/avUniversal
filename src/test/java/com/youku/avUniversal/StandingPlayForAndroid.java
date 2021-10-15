@@ -111,7 +111,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 60 );
 
             try {
-                String ossUrl = ossUpload.uploadFileToLongTerm( "/Users/yktest/av-test/record/",
+                String ossUrl = ossUpload.uploadFileToLongTerm( "/Users/yktest/av-test/record/" + recordFileName,
                     recordFileName, FileTypeEnum.ITAMI );
                 logger.warn( "录屏ossUrl:" + ossUrl );
             } catch (Throwable throwable) {
