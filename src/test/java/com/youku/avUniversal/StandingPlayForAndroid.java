@@ -4,10 +4,12 @@ import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.CmdExecutor;
 import com.youku.avUniversal.Utils.YoukuLogin;
 import com.youku.itami.utility.OssUpload.FileTypeEnum;
+import org.apache.http.client.fluent.Request;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -114,6 +116,12 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 String ossUrl = ossUpload.uploadFileToLongTerm( "/Users/yktest/av-test/record/" + recordFileName,
                     recordFileName, FileTypeEnum.ITAMI );
                 logger.warn( "录屏ossUrl:" + ossUrl );
+                // 触发魔镜分帧
+                String cutFrameUrlTemplate = "https://pre-mirror-algorithm.alibaba-inc.com/api/detectQrResult?videoUrl=%s&instanceId=%s&interval=40";
+                String url = String.format( cutFrameUrlTemplate, ossUrl, exeId );
+                logger.warn( "请求魔镜分帧url:" + url );
+                String result = Request.Get( url ).execute().returnContent().asString( Charset.forName( "utf-8" ) );
+                logger.warn( "分帧请求返回:" + result );
             } catch (Throwable throwable) {
                 logger.error( "上传oss失败" );
                 throwable.printStackTrace();
