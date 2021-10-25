@@ -1,6 +1,7 @@
 package com.youku.avUniversal.TestSuite;
 
 import com.youku.avUniversal.StandingPlayForAndroid;
+import com.youku.itami.utility.ItamiReport.ItamiReport;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -14,5 +15,5 @@ import org.junit.runners.Suite;
     StandingPlayForAndroid.class
 })
 
-public class StandingPlayForAndroidTestSuite {
+public class StandingPlayForAndroidTestSuite extends ItamiReport {
 }
