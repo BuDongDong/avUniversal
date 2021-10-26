@@ -299,7 +299,16 @@ public class PlayerBaseCase extends ItamiBaseCase {
                     episodeBtns.get( 0 ).click(); //点击更多按钮
                 } else {
                     //IDLRect target = ImageML.itamiImageSearchInCurrentScreen( "more_dot.jpg" );
-                    IDLRect target = ImageML.itamiImageSearchInCurrentScreenByIcon( more_dot_url );
+                    IDLRect target = null;
+                    int retryCount = 0;
+                    while (retryCount < 2) {
+                        try {
+                            target = ImageML.itamiImageSearchInCurrentScreenByIcon( more_dot_url );
+                            break;
+                        } catch (Exception e) {
+                            retryCount ++;
+                        }
+                    }
                     logger.warn( "尝试图像识别" );
                     if (target != null) {
                         driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
@@ -342,14 +351,31 @@ public class PlayerBaseCase extends ItamiBaseCase {
                 if (!findIt) {
                     logger.warn( "尝试图像识别" );
                     //IDLRect target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode_playing.jpg" );
-                    IDLRect target = ImageML.itamiImageSearchInCurrentScreenByIcon( choose_episode_playing_url );
+                    IDLRect target = null;
+                    int retryCount = 0;
+                    while (retryCount < 2) {
+                        try {
+                            target = ImageML.itamiImageSearchInCurrentScreenByIcon( choose_episode_playing_url );
+                            break;
+                        } catch (Exception e) {
+                            retryCount ++;
+                        }
+                    }
                     if (target != null) {
                         driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
                         System.out.println( target );
                         findIt = true;
                     } else {
                         //target = ImageML.itamiImageSearchInCurrentScreen( "choose_episode.jpg" );
-                        target = ImageML.itamiImageSearchInCurrentScreenByIcon( choose_episode_url );
+                        retryCount = 0;
+                        while (retryCount < 2) {
+                            try {
+                                target = ImageML.itamiImageSearchInCurrentScreenByIcon( choose_episode_url );
+                                break;
+                            } catch (Exception e) {
+                                retryCount ++;
+                            }
+                        }
                         if (target != null) {
                             driver.click( target.getX() + 20, target.getY() + 20 ); //点击更多按钮
                             System.out.println( target );
