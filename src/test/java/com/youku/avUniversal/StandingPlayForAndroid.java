@@ -117,7 +117,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                     recordFileName, FileTypeEnum.ITAMI );
                 logger.warn( "录屏ossUrl:" + ossUrl );
                 // 触发魔镜分帧
-                String cutFrameUrlTemplate = "https://pre-mirror-algorithm.alibaba-inc.com/api/detectQrResult?videoUrl=%s&instanceId=%s&interval=40";
+                String cutFrameUrlTemplate = "https://mirror-algorithm.alibaba.com/api/detectQrResult?videoUrl=%s&instanceId=%s&interval=40";
                 String url = String.format( cutFrameUrlTemplate, ossUrl, exeId );
                 logger.warn( "请求魔镜分帧url:" + url );
                 String result = Request.Get( url ).execute().returnContent().asString( Charset.forName( "utf-8" ) );
