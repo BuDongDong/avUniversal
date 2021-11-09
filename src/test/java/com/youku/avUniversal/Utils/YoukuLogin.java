@@ -147,12 +147,28 @@ public class YoukuLogin {
             LoginButton.click();
         } catch (Exception e) {
             System.out.println( "未找到登录/注册" );
+            return;
         }
         TotoroUtils.sleep( 2000 );
+
+
+        try {
+            WebElement unChoose = driver.findElementByName( "未勾选" );
+            unChoose.click();
+        } catch (Exception e) {
+            logger.warn( "没有出现隐私权限勾选框" );
+        }
+
+        TotoroUtils.sleep( 2000 );
+
         //WebElement QQLoginButton = driver.findElementByName("账号/手机号登录");
         WebElement QQLoginButton = driver.findElementByName( "手机号登录" );
+        if (QQLoginButton == null) {
+            logger.warn( "未发现'手机号登录'按钮" );
+        }
         QQLoginButton.click();
         TotoroUtils.sleep( 2000 );
+
         WebElement AccountLoginButton = driver.findElementByName( "账户密码登录" );
         AccountLoginButton.click();
         TotoroUtils.sleep( 2000 );

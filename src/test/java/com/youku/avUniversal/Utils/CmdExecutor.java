@@ -63,7 +63,7 @@ public class CmdExecutor {
         }
     }
 
-    public static int execCmd(String[] command, StringBuilder log, int timeoutSecond)
+    public int execCmd(String[] command, StringBuilder log, int timeoutSecond)
         throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder( command );
         // 合并错误输出流

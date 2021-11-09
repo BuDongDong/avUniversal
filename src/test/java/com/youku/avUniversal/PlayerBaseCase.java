@@ -8,15 +8,21 @@ package com.youku.avUniversal;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.totoro.client.deeplearning.adstract.IDLRect;
+import com.totoro.client.deeplearning.adstract.OcrElement;
 import com.totoro.client.internal.MobileDriver;
 import com.totoro.client.utils.ADBCommandUtils;
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.Constant;
+import com.youku.avUniversal.Utils.YoukuLogin;
+import com.youku.itami.config.AndroidDevice;
+import com.youku.itami.config.IPhoneDevice;
 import com.youku.itami.core.ItamiBaseCase;
+import com.youku.itami.core.Permission;
 import com.youku.itami.core.Router;
 import com.youku.itami.utility.ImgHandler.ImageML.ImageML;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebElement;
@@ -36,13 +42,26 @@ public class PlayerBaseCase extends ItamiBaseCase {
     public String exeId = "null";
     public String testApp = "优酷";
     public String showName = "鬮乆彡瓩 14";
-    public String videoName = "第52期 : 优酷视频质量测试";
+    //public String videoName = "第52期 : 优酷视频质量测试";
+    public String videoName = "优酷视频质量测试";
     public String resolution = "1080P";
+    public String vid = "XNTEyNTQxMTYwNA==";
 
-    private String more_dot_url = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/more_dot.jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563354&Signature=s2KjfIazxi8zSCR2KJnd%2BmujbDY%3D";
-    private String choose_episode_url = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/choose_episode.jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563266&Signature=lUlKwCJWIDzomby91fVk5ETOYOw%3D";
-    private String choose_episode_playing_url = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/choose_episode_playing.jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563381&Signature=y68lIqlQATTa2tTH7uSTt%2FlbZuQ%3D";
+    private String more_dot_url
+        = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/more_dot"
+        + ".jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563354&Signature=s2KjfIazxi8zSCR2KJnd%2BmujbDY%3D";
+    private String choose_episode_url
+        = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/choose_episode"
+        + ".jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563266&Signature=lUlKwCJWIDzomby91fVk5ETOYOw%3D";
+    private String choose_episode_playing_url
+        = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/choose_episode_playing"
+        + ".jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563381&Signature=y68lIqlQATTa2tTH7uSTt%2FlbZuQ%3D";
 
+    static {
+        DEVICE = new IPhoneDevice( null, null );
+        //DEVICE = new AndroidDevice( null, null, null );
+        Permission.permissionYouku( DEVICE.getDeviceId(), DEVICE.getPackageName() );
+    }
 
     @Before
     public void before() {
@@ -98,6 +117,31 @@ public class PlayerBaseCase extends ItamiBaseCase {
         TotoroUtils.sleep( 8000 );
         //跳过启动广告
         //        skipLaunchAd(driver, DEVICE.getPlatform());
+    }
+
+    @Test
+    public void test() {
+        WebElement UserCenterButton = driver.findElementByName( "我的" );
+        UserCenterButton.click();
+        TotoroUtils.sleep( 2000 );
+        driver.closeApp( DEVICE.getPackageName() );
+        logger.warn( "关闭app" );
+        driver.launchApp( DEVICE.getPackageName() );
+        TotoroUtils.sleep( 5000 );
+        YoukuLogin.login( itamiBaseCase, "13161700207", "youkuvip123" );
+    }
+
+    public boolean openYoukuIphoneTestVideo() {
+        logger.warn( "step1: 打开测试视频" );
+        Router.IphoneSchemeLaunch( driver, "youku://play?vid=XNTEyNTQxMTYwNA==&from=0&mode=1&quality=600" );
+        return true;
+    }
+
+    public boolean openYoukuAndroidTestVideo() {
+        logger.warn( "step1: 打开测试视频" );
+        Router.AnroidSchemeLaunch( driver, String.format( "youku://play?source=stardetail\\&vid=%s\\&mode"
+            + "=full_horizontal\\&quality=400\\&point=0", vid ), DEVICE.getDeviceId() );
+        return true;
     }
 
     @After
@@ -226,22 +270,24 @@ public class PlayerBaseCase extends ItamiBaseCase {
         }
     }
 
-    public boolean searchVideoInIphone() {
-        if (testApp.equals( "优酷" )) {
-            Router.IphoneSchemeLaunch( driver, Constant.YOUKU_SEARCH_SCHEME_TEXT + showName );
-        } else {
-            String searchInfo;
-            if (testApp.equals( "爱奇艺" )) {
-                searchInfo = Constant.IQIYI_SEARCH_ITEM_NAME;
-            } else {
-                searchInfo = Constant.TENCENT_SEARCH_ITEM_XPATH;
-            }
-            WebElement searchItem = waitForElementIphone( driver, searchInfo, 5 );
-            if (searchItem != null) {
-                searchItem.sendKeys( showName );
-            }
-        }
+    public boolean openYoukuIphoneSearchPage() {
+        logger.debug( "step1: 搜索片源，进入搜索结果页" );
+        Router.IphoneSchemeLaunch( driver, Constant.YOUKU_SEARCH_SCHEME_TEXT + showName.replaceAll( " ", "%20" ) );
         return true;
+    }
+
+    public boolean enterYoukuIphoneEpisode() {
+
+        OcrElement ocrElement = ImageML.itamiOcrElement( videoName );
+        if (ocrElement != null) {
+            ocrElement.click( driver );
+            logger.warn( "找到测试视频:" + videoName );
+            return true;
+        } else {
+            logger.warn( "未找到测试视频:" + videoName );
+            Log.addScreenShot( "未找到测试视频:" + videoName );
+            return false;
+        }
     }
 
     public boolean searchAndroidVideo() {
@@ -306,7 +352,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
                             target = ImageML.itamiImageSearchInCurrentScreenByIcon( more_dot_url );
                             break;
                         } catch (Exception e) {
-                            retryCount ++;
+                            retryCount++;
                         }
                     }
                     logger.warn( "尝试图像识别" );
@@ -358,7 +404,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
                             target = ImageML.itamiImageSearchInCurrentScreenByIcon( choose_episode_playing_url );
                             break;
                         } catch (Exception e) {
-                            retryCount ++;
+                            retryCount++;
                         }
                     }
                     if (target != null) {
@@ -373,7 +419,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
                                 target = ImageML.itamiImageSearchInCurrentScreenByIcon( choose_episode_url );
                                 break;
                             } catch (Exception e) {
-                                retryCount ++;
+                                retryCount++;
                             }
                         }
                         if (target != null) {
