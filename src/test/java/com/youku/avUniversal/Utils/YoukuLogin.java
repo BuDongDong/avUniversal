@@ -54,16 +54,20 @@ public class YoukuLogin {
                     word.click( driver );
                 } else {
                     logger.warn( "已经是登录状态了" );
-                    System.out.println( "已经是登录状态了" );
                     return;
                 }
             } catch (Exception e) {
                 logger.warn( "弹出了登录框了" );
-                System.out.println( "弹出了登录框了" );
             }
         }
+        TotoroUtils.sleep( 2000 );
         try {
-            TotoroUtils.sleep( 5000 );
+            driver.findElementByIdWithoutExp( "com.youku.phone:id/passport_login_protocol_checkbox" ).click();
+        } catch (Exception e) {
+            logger.warn( "没有出现隐私权限勾选框" );
+        }
+        try {
+            TotoroUtils.sleep( 2000 );
             WebElement wordTwo = null;
             wordTwo = driver.findElementByNameWithoutExp( "手机号登录" );
             logger.warn( "ocr识别手机号登录按钮" );
@@ -90,12 +94,7 @@ public class YoukuLogin {
         } catch (Exception e) {
             System.out.println( "弹出了登录框了" );
         }
-        TotoroUtils.sleep( 2000 );
-        try {
-            driver.findElementByIdWithoutExp( "com.youku.phone:id/passport_login_protocol_checkbox" ).click();
-        } catch (Exception e) {
-            logger.warn( "没有出现隐私权限勾选框" );
-        }
+
         try {
             WebElement AccountLoginButton = driver.findElementByName( "手机号登录" );
             if (AccountLoginButton.isDisplayed()) {
