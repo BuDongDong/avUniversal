@@ -41,7 +41,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
 
     @Test
     public void testStandingPlay() {
-        logger.warn( "开始测试" );
+        logger.warn( "开始测试123" );
         if (showName == null || videoName == null) {
             logger.warn( "参数异常，请检查测试片源、测试剧集的传参是否正确" );
             return;

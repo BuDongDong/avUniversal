@@ -21,7 +21,6 @@ public class YoukuLogin {
 
     private static Logger logger = LoggerFactory.getLogger( YoukuLogin.class );
 
-
     public static void login(ItamiBaseCase baseCase, String accountNumber, String scretNumber) {
         Device DEVICE = baseCase.DEVICE;
         MobileDriver driver = baseCase.driver;
@@ -34,7 +33,7 @@ public class YoukuLogin {
 
     private static void YoukuLoginAndroid(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
         TotoroUtils.sleep( 5000 );
-        System.out.println( "切换到我的Tab" );
+        logger.warn( "切换到我的Tab" );
         try {
             WebElement UserCenterButton = driver.findElementByName( "我的" );
             UserCenterButton.click();
@@ -149,7 +148,6 @@ public class YoukuLogin {
         }
         TotoroUtils.sleep( 2000 );
 
-
         try {
             WebElement unChoose = driver.findElementByName( "未勾选" );
             unChoose.click();
@@ -190,7 +188,8 @@ public class YoukuLogin {
             System.out.println( "未找到对应按钮" );
         }
         //        TotoroUtils.sleep(2000);
-        //        List<ItamiImageFeature> it2= ImageML.singleFeatureIdentification(itamiBaseCase,"YoukuPassportCloseButton");
+        //        List<ItamiImageFeature> it2= ImageML.singleFeatureIdentification(itamiBaseCase,
+        // "YoukuPassportCloseButton");
         //        if(it2.size()!=0){
         //            ItamiImageFeature iit2=it2.get(0);
         //            driver.click(iit2.getX(),iit2.getY());
