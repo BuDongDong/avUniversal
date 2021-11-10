@@ -59,13 +59,14 @@ public class StandingPlayForIphone extends PlayerBaseCase {
             CmdExecutor cmdExecutor = new CmdExecutor();
 
             String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
-            String recordDirectory = System.getProperty("user.home") + "/av-test/record/";
+            String avDirectory = System.getProperty("user.home") + "/av-test/";
+            String recordDirectory = avDirectory + "record/";
             String recordFileName = String.format( "%s-%s-%s.mp4", exeId, time, DEVICE.getDeviceId() );
             File folder = new File( recordDirectory );
             if (!folder.exists() || !folder.isDirectory()) {
                 folder.mkdirs();
             }
-            String cmd = String.format( "/Users/mayfeel/Work/Code/xrecord-pro/bin/xrecord --quicktime --id %s --out=%s --force --quality 540p", DEVICE.getDeviceId(),
+            String cmd = String.format( avDirectory + "xrecord --quicktime --id %s --out=%s --force --quality 540p", DEVICE.getDeviceId(),
                 recordDirectory + recordFileName );
             logger.warn( "命令:" + cmd );
 
