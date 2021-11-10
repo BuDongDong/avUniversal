@@ -57,15 +57,15 @@ public class PlayerBaseCase extends ItamiBaseCase {
         = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/choose_episode_playing"
         + ".jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563381&Signature=y68lIqlQATTa2tTH7uSTt%2FlbZuQ%3D";
 
-    static {
-        DEVICE = new IPhoneDevice( null, null );
-        logger.warn( "尝试查找iphone设备: " + DEVICE.getDeviceId() );
-        if (DEVICE.getDeviceId() == null) {
-            DEVICE = new AndroidDevice( null, null, null );
-            logger.warn( "尝试查找android设备: " + DEVICE.getDeviceId() );
-        }
-        Permission.permissionYouku( DEVICE.getDeviceId(), DEVICE.getPackageName() );
-    }
+    //static {
+    //    DEVICE = new IPhoneDevice( null, null );
+    //    logger.warn( "尝试查找iphone设备: " + DEVICE.getDeviceId() );
+    //    if (DEVICE.getDeviceId() == null) {
+    //        DEVICE = new AndroidDevice( null, null, null );
+    //        logger.warn( "尝试查找android设备: " + DEVICE.getDeviceId() );
+    //    }
+    //    Permission.permissionYouku( DEVICE.getDeviceId(), DEVICE.getPackageName() );
+    //}
 
     @Before
     public void before() {
