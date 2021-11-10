@@ -102,6 +102,9 @@ public class PlayerBaseCase extends ItamiBaseCase {
                     } else if ("videoFormat".equals( ((JSONObject)each).getString( "name" ) )) {
                         resolution = ((JSONObject)each).getString( "value" );
                         logger.warn( "设置resolution: " + resolution );
+                    } else if ("vid".equals( ((JSONObject)each).getString( "name" ) )) {
+                        vid = ((JSONObject)each).getString( "value" );
+                        logger.warn( "设置vid: " + vid );
                     }
                 }
             } catch (Exception e) {
