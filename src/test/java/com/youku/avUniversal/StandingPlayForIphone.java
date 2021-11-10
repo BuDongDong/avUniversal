@@ -38,7 +38,7 @@ public class StandingPlayForIphone extends PlayerBaseCase {
         logger.warn( "关闭app" );
         driver.launchApp( DEVICE.getPackageName() );
         TotoroUtils.sleep( 5000 );
-        YoukuLogin.login( itamiBaseCase, "13161700207", "youkuvip123" );
+        YoukuLogin.YoukuLoginIPhone( driver, "13161700207", "youkuvip123" );
         logger.warn( "登录操作执行完成" );
         driver.closeApp( DEVICE.getPackageName() );
         logger.warn( "关闭app" );

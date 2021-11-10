@@ -21,17 +21,17 @@ public class YoukuLogin {
 
     private static Logger logger = LoggerFactory.getLogger( YoukuLogin.class );
 
-    public static void login(ItamiBaseCase baseCase, String accountNumber, String scretNumber) {
-        Device DEVICE = baseCase.DEVICE;
-        MobileDriver driver = baseCase.driver;
-        if (DEVICE instanceof AndroidDevice) {
-            YoukuLoginAndroid( driver, accountNumber, scretNumber );
-        } else if (DEVICE instanceof IPhoneDevice) {
-            YoukuLoginIPhone( driver, accountNumber, scretNumber );
-        }
-    }
+    //public static void login(ItamiBaseCase baseCase, String accountNumber, String scretNumber) {
+    //    Device DEVICE = baseCase.DEVICE;
+    //    MobileDriver driver = baseCase.driver;
+    //    if (DEVICE instanceof AndroidDevice) {
+    //        YoukuLoginAndroid( driver, accountNumber, scretNumber );
+    //    } else if (DEVICE instanceof IPhoneDevice) {
+    //        YoukuLoginIPhone( driver, accountNumber, scretNumber );
+    //    }
+    //}
 
-    private static void YoukuLoginAndroid(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
+    public static void YoukuLoginAndroid(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
         TotoroUtils.sleep( 5000 );
         logger.warn( "切换到我的Tab" );
         try {
@@ -134,7 +134,7 @@ public class YoukuLogin {
         TotoroUtils.sleep( 3000 );
     }
 
-    private static void YoukuLoginIPhone(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
+    public static void YoukuLoginIPhone(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
         TotoroUtils.sleep( 5000 );
         WebElement UserCenterButton = driver.findElementByName( "我的" );
         UserCenterButton.click();

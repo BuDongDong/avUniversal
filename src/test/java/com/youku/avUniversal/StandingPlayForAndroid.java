@@ -47,7 +47,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             return;
         }
 
-        YoukuLogin.login( itamiBaseCase, "13161700207", "youkuvip123" );
+        YoukuLogin.YoukuLoginAndroid( driver, "13161700207", "youkuvip123" );
         logger.warn( "登录操作执行完成" );
         driver.closeApp( DEVICE.getPackageName() );
         logger.warn( "关闭app" );
