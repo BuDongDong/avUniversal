@@ -52,15 +52,16 @@ public class YoukuLogin {
                 OcrElement word = ImageML.itamiOcrElement( "登录/注册" );
                 if (null != word) {
                     word.click( driver );
+                    logger.warn( "弹出了登录框了" );
                 } else {
                     logger.warn( "已经是登录状态了" );
                     return;
                 }
             } catch (Exception e) {
-                logger.warn( "弹出了登录框了" );
+                logger.warn( "未成功弹出登录框" );
             }
         }
-        TotoroUtils.sleep( 2000 );
+        TotoroUtils.sleep( 5000 );
         try {
             driver.findElementByIdWithoutExp( "com.youku.phone:id/passport_login_protocol_checkbox" ).click();
         } catch (Exception e) {
