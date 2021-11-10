@@ -122,18 +122,6 @@ public class PlayerBaseCase extends ItamiBaseCase {
         //        skipLaunchAd(driver, DEVICE.getPlatform());
     }
 
-    @Test
-    public void test() {
-        WebElement UserCenterButton = driver.findElementByName( "我的" );
-        UserCenterButton.click();
-        TotoroUtils.sleep( 2000 );
-        driver.closeApp( DEVICE.getPackageName() );
-        logger.warn( "关闭app" );
-        driver.launchApp( DEVICE.getPackageName() );
-        TotoroUtils.sleep( 5000 );
-        YoukuLogin.login( itamiBaseCase, "13161700207", "youkuvip123" );
-    }
-
     public boolean openYoukuIphoneTestVideo() {
         logger.warn( "step1: 打开测试视频" );
         Router.IphoneSchemeLaunch( driver, "youku://play?vid=XNTEyNTQxMTYwNA==&from=0&mode=1&quality=600" );
