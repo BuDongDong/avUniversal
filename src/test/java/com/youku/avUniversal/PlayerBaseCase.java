@@ -59,7 +59,11 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     static {
         DEVICE = new IPhoneDevice( null, null );
-        //DEVICE = new AndroidDevice( null, null, null );
+        logger.warn( "尝试查找iphone设备: " + DEVICE.getDeviceId() );
+        if (DEVICE.getDeviceId() == null) {
+            DEVICE = new AndroidDevice( null, null, null );
+            logger.warn( "尝试查找android设备: " + DEVICE.getDeviceId() );
+        }
         Permission.permissionYouku( DEVICE.getDeviceId(), DEVICE.getPackageName() );
     }
 

@@ -73,14 +73,16 @@ public class YoukuLogin {
             logger.warn( "ocr识别手机号登录按钮" );
             if (null != wordTwo) {
                 logger.warn( "找到了手机号登录按钮" );
-                System.out.println( "账号/手机号登录 登录" );
-                WebElement QQLoginButton = driver.findElementByName( "手机号登录" );
-                QQLoginButton.click();
+                wordTwo.click();
                 TotoroUtils.sleep( 1000 );
-                WebElement QQLoginButtonDouble = driver.findElementByNameWithoutExp( "手机号登录" );
-                if (null != QQLoginButtonDouble) {
-                    QQLoginButtonDouble.click();
-                }
+                //System.out.println( "账号/手机号登录 登录" );
+                //WebElement QQLoginButton = driver.findElementByName( "手机号登录" );
+                //QQLoginButton.click();
+                //TotoroUtils.sleep( 1000 );
+                //WebElement QQLoginButtonDouble = driver.findElementByNameWithoutExp( "手机号登录" );
+                //if (null != QQLoginButtonDouble) {
+                //    QQLoginButtonDouble.click();
+                //}
             } else {
                 logger.warn( "未到了手机号登录按钮" );
                 WebElement LoginButton = driver.findElementByName( "登录/注册" );
@@ -92,20 +94,16 @@ public class YoukuLogin {
                 TotoroUtils.sleep( 1000 );
             }
         } catch (Exception e) {
-            System.out.println( "弹出了登录框了" );
+            logger.error( "未找到手机号登录按钮" );
         }
 
         try {
-            WebElement AccountLoginButton = driver.findElementByName( "手机号登录" );
-            if (AccountLoginButton.isDisplayed()) {
-                AccountLoginButton.click();
-            }
-            AccountLoginButton = driver.findElementByName( "账号登录" );
-            if (AccountLoginButton.isDisplayed()) {
+            WebElement AccountLoginButton = driver.findElementByName( "账号登录" );
+            if (AccountLoginButton != null) {
                 AccountLoginButton.click();
             }
         } catch (Exception e) {
-            System.out.println( "未找到按钮" );
+            logger.error( "未找到账号登录按钮" );
         }
         TotoroUtils.sleep( 2000 );
         try {
