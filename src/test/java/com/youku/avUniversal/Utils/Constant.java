@@ -22,6 +22,11 @@ public class Constant {
     public static final String LOGIN_ANDROID_YOUKU_ACCOUNT = "15810639312";
     public static final String LOGIN_ANDROID_YOUKU_PWD = "13691070695youku";
 
+    public static final String MOBIZEN_HOME_BUTTON = "com.rsupport.mvagent:id/iv_button";
+    public static final String MOBIZEN_RECORD_BUTTON = "com.rsupport.mvagent:id/iv_record";
+    public static final String MOBIZEN_STOP_BUTTON = "com.rsupport.mvagent:id/iv_icon_stop";
+    public static final String MOBIZEN_CLOSE_BUTTON = "android:id/button2";
+
     //    public static final String YOUKU_WELCOME_ACTIVITY =
     //    public static final String TENCENT_WELCOME_ACTIVITY = "com.tencent.qqlive/com.tencent.qqlive.ona.activity.SplashHomeActivity";
     //    public static final String IQIYI_WELCOME_ACTIVITY = "com.qiyi.video/com.qiyi.video.WelcomeActivity";

@@ -1,11 +1,14 @@
 package com.youku.avUniversal;
 
+import com.totoro.client.utils.ADBCommandUtils;
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.CmdExecutor;
+import com.youku.avUniversal.Utils.Constant;
 import com.youku.avUniversal.Utils.YoukuLogin;
 import com.youku.itami.utility.OssUpload.FileTypeEnum;
 import org.apache.http.client.fluent.Request;
 import org.junit.Test;
+import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,23 +24,7 @@ import java.util.Date;
 public class StandingPlayForAndroid extends PlayerBaseCase {
 
     private static Logger logger = LoggerFactory.getLogger( StandingPlayForAndroid.class );
-
-    //@Test
-    //public void test(){
-    //    CmdExecutor cmdExecutor = new CmdExecutor();
-    //    // -s 指定不同手机
-    //    String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
-    //    String cmd = String.format( "scrcpy%s--max-fps 60 --bit-rate 2M --max-size 1080 -Nr
-    // /Users/yktest/av-test/record/%s.mp4", deviceId, time );
-    //    logger.warn( "命令:" + cmd );
-    //
-    //    try {
-    //        int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 30 );
-    //    } catch (Exception e) {
-    //        e.printStackTrace();
-    //    }
-    //    logger.warn( "结束测试" );
-    //}
+    private int openMobizen = 1;
 
     @Test
     public void testStandingPlay() {
@@ -72,20 +59,94 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             if (!folder.exists() || !folder.isDirectory()) {
                 folder.mkdirs();
             }
-            String cmd = String.format(
-                "scrcpy -s %s --max-fps 60 --bit-rate 2M --max-size 1080 -Nr %s", DEVICE.getDeviceId(),
-                recordDirectory + recordFileName );
-            logger.warn( "命令:" + cmd );
 
-            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 60 );
+            if (openMobizen == 1) {
+                ADBCommandUtils.exec( DEVICE.getDeviceId(), "shell", "rm", "-r", "/sdcard/Movies/Mobizen" );
+                TotoroUtils.sleep( 1000 );
+
+                WebElement mobizen_home = waitForElement( driver, Constant.MOBIZEN_HOME_BUTTON, 4 );
+                if (mobizen_home != null) {
+                    mobizen_home.click();
+                } else {
+                    logger.error( "录屏异常1" );
+                }
+                TotoroUtils.sleep( 1000 );
+                WebElement mobizen_record = waitForElement( driver, Constant.MOBIZEN_RECORD_BUTTON, 4 );
+                if (mobizen_record != null) {
+                    mobizen_record.click();
+                    logger.warn( "开始使用mobizen录屏" );
+                    TotoroUtils.sleep( duration * 1000 );
+                } else {
+                    logger.error( "录屏异常2" );
+                }
+
+                mobizen_home = waitForElement( driver, Constant.MOBIZEN_HOME_BUTTON, 4 );
+                if (mobizen_home != null) {
+                    mobizen_home.click();
+                } else {
+                    logger.error( "录屏异常3" );
+                }
+                TotoroUtils.sleep( 1000 );
+                WebElement mobizen_stop = waitForElement( driver, Constant.MOBIZEN_STOP_BUTTON, 4 );
+                if (mobizen_stop != null) {
+                    mobizen_stop.click();
+                    logger.warn( "结束录屏" );
+                } else {
+                    logger.error( "录屏异常4" );
+                }
+                TotoroUtils.sleep( 1000 );
+
+                WebElement mobizen_close = waitForElement( driver, Constant.MOBIZEN_CLOSE_BUTTON, 4 );
+                if (mobizen_close != null && (mobizen_close.getText().contains( "关闭" ) || mobizen_close.getText()
+                    .contains( "以后再说" ))) {
+                    mobizen_close.click();
+                    logger.warn( "关闭录屏" );
+                } else {
+                    logger.error( "录屏异常5" );
+                }
+                TotoroUtils.sleep( 1000 );
+
+                logger.warn( "开始拷贝视频文件" );
+                String tmpDirectory = recordDirectory + "tmp/" + exeId + "/";
+                File tmpFolder = new File( tmpDirectory );
+                if (!tmpFolder.exists() || !tmpFolder.isDirectory()) {
+                    tmpFolder.mkdirs();
+                }
+                ADBCommandUtils.exec( DEVICE.getDeviceId(), "pull", "/sdcard/Movies/Mobizen", tmpDirectory );
+                String mobizenDirectory = tmpDirectory + "Mobizen/";
+                File mobizenFolder = new File( mobizenDirectory );
+                if (mobizenFolder.exists()) {
+                    String[] files = mobizenFolder.list();
+                    if (files.length > 0) {
+                        File oldFile = new File( mobizenDirectory + files[0] );
+                        File newFile = new File( recordDirectory + recordFileName );
+                        if (oldFile.renameTo( newFile )) {
+                            logger.warn( "文件移动成功" );
+                        } else {
+                            logger.error( "文件移动失败" );
+                        }
+                    }
+                }
+            } else {
+                String cmd = String.format(
+                    "scrcpy -s %s --max-fps 60 --bit-rate 2M --max-size 1080 -Nr %s", DEVICE.getDeviceId(),
+                    recordDirectory + recordFileName );
+                logger.warn( "命令:" + cmd );
+                int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, duration );
+            }
+
             logger.warn( "step3.5 结束录像, 并上传oss调用魔镜分帧" );
-
             try {
-                String ossUrl = ossUpload.uploadFileToLongTerm( recordDirectory + recordFileName,
-                    recordFileName, FileTypeEnum.ITAMI );
-                logger.warn( "录屏ossUrl:" + ossUrl );
-                // 触发魔镜分帧
-                SplitFrame.callMirror( ossUrl, exeId );
+                File recordFile = new File( recordDirectory + recordFileName );
+                if (recordFile.exists()) {
+                    //String ossUrl = ossUpload.uploadFileToLongTerm( recordDirectory + recordFileName,
+                    //    recordFileName, FileTypeEnum.ITAMI );
+                    //logger.warn( "录屏ossUrl:" + ossUrl );
+                    //// 触发魔镜分帧
+                    //SplitFrame.callMirror( ossUrl, exeId );
+                } else {
+                    logger.error( "未找到录屏文件:" + recordDirectory + recordFileName );
+                }
             } catch (Throwable throwable) {
                 logger.error( "上传oss失败" );
                 throwable.printStackTrace();

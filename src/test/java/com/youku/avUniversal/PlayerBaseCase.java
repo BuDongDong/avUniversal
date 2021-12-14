@@ -46,6 +46,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
     public String videoName = "优酷视频质量测试";
     public String resolution = "1080P";
     public String vid = "XNTEyNTQxMTYwNA==";
+    public int duration = 60;
 
     private String more_dot_url
         = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/more_dot"
@@ -109,6 +110,9 @@ public class PlayerBaseCase extends ItamiBaseCase {
                     } else if ("vid".equals( ((JSONObject)each).getString( "name" ) )) {
                         vid = ((JSONObject)each).getString( "value" );
                         logger.warn( "设置vid: " + vid );
+                    } else if ("duration".equals( ((JSONObject)each).getString( "name" ) )) {
+                        duration = ((JSONObject)each).getIntValue( "value" );
+                        logger.warn( "设置duration: " + duration );
                     }
                 }
             } catch (Exception e) {
