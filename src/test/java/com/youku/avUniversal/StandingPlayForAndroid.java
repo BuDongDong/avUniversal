@@ -139,11 +139,11 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             try {
                 File recordFile = new File( recordDirectory + recordFileName );
                 if (recordFile.exists()) {
-                    //String ossUrl = ossUpload.uploadFileToLongTerm( recordDirectory + recordFileName,
-                    //    recordFileName, FileTypeEnum.ITAMI );
-                    //logger.warn( "录屏ossUrl:" + ossUrl );
-                    //// 触发魔镜分帧
-                    //SplitFrame.callMirror( ossUrl, exeId );
+                    String ossUrl = ossUpload.uploadFileToLongTerm( recordDirectory + recordFileName,
+                        recordFileName, FileTypeEnum.ITAMI );
+                    logger.warn( "录屏ossUrl:" + ossUrl );
+                    // 触发魔镜分帧
+                    SplitFrame.callMirror( ossUrl, exeId );
                 } else {
                     logger.error( "未找到录屏文件:" + recordDirectory + recordFileName );
                 }
