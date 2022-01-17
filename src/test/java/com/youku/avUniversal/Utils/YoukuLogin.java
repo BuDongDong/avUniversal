@@ -194,9 +194,11 @@ public class YoukuLogin {
         TotoroUtils.sleep( 2000 );
         WebElement QQtext = driver.findElementByName( "请输入手机号码/邮箱" );
         QQtext.sendKeys( accountNumber );
+        logger.warn( "输入账号" );
         TotoroUtils.sleep( 2000 );
         WebElement ScretNumber = driver.findElementByName( "请输入密码" );
         ScretNumber.sendKeys( scretNumber );
+        logger.warn( "输入密码" );
         TotoroUtils.sleep( 2000 );
         driver.findElementByName( "登录" ).click();
         TotoroUtils.sleep( 5000 );
