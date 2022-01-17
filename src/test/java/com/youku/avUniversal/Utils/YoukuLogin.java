@@ -211,14 +211,28 @@ public class YoukuLogin {
             } catch (Exception ee) {
             }
         }
-        if (scretNumber == null) {
+        if (secretField == null) {
             logger.error( "输入密码失败" );
             return;
         }
         secretField.sendKeys( scretNumber );
         logger.warn( "输入密码" );
         TotoroUtils.sleep( 2000 );
-        driver.findElementByName( "登录" ).click();
+
+        WebElement loginField = null;
+        try {
+            loginField = driver.findElementByName( "loginSDK_button_login" );
+        } catch (Exception e) {
+            try {
+                loginField = driver.findElementByName( "登录" );
+            } catch (Exception ee) {
+            }
+        }
+        if (loginField == null) {
+            logger.error( "登录失败" );
+            return;
+        }
+        loginField.click();
         logger.warn( "点击登录" );
 
         TotoroUtils.sleep( 5000 );
