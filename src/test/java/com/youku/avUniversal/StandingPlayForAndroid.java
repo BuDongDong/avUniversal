@@ -49,6 +49,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             if (!setResolutionAndroid()) {
                 Log.addScreenShot( "第" + videoName + "集设置清晰度失败" );
             }
+            TotoroUtils.sleep( 5000 );
 
             logger.warn( "step3.4 开始录像" );
             CmdExecutor cmdExecutor = new CmdExecutor();
@@ -68,7 +69,16 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 if (mobizen_home != null) {
                     mobizen_home.click();
                 } else {
-                    logger.error( "录屏异常1" );
+                    logger.warn( "尝试kill调mobizen进程并重启" );
+                    ADBCommandUtils.exec( DEVICE.getDeviceId(), "shell", "am", "force-stop", "com.rsupport.mvagent" );
+                    ADBCommandUtils.exec( DEVICE.getDeviceId(), "shell", "monkey", "-p", "com.rsupport.mvagent", "1" );
+                    TotoroUtils.sleep( 2000 );
+                    mobizen_home = waitForElement( driver, Constant.MOBIZEN_HOME_BUTTON, 4 );
+                    if (mobizen_home != null) {
+                        mobizen_home.click();
+                    } else {
+                        logger.error( "录屏异常1" );
+                    }
                 }
                 TotoroUtils.sleep( 1000 );
                 WebElement mobizen_record = waitForElement( driver, Constant.MOBIZEN_RECORD_BUTTON, 4 );
@@ -258,5 +268,4 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
     //        backToEpisodesAndroid();
     //    }
     //}
-
 }
