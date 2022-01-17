@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <YKAutoTest>
+<!--    <device>-->
+<!--        <platform>ANDROID</platform>-->
+<!--        <deviceType>Android</deviceType>-->
+<!--        <packageName>com.youku.phone</packageName>-->
+<!--        <deviceId>XWN0220C15058286</deviceId>-->
+<!--        <activity>ActivityWelcome</activity>-->
+<!--    </device>-->
     <device>
-        <platform>ANDROID</platform>
-        <deviceType>Android</deviceType>
-        <packageName>com.youku.phone</packageName>
-        <!--<deviceId>Q5S5T19617000395</deviceId>-->
-        <deviceId>XWN0220C15058286</deviceId>
-        <!--        <packageName>com.tencent.qqlive</packageName>-->
-        <!--<packageName>com.qiyi.video</packageName>-->
-        <activity>ActivityWelcome</activity>
+        <platform>ios</platform>
+        <deviceType>iPhone</deviceType>
+        <deviceId>00008030-000A294E3604802E</deviceId>
+        <packageName>com.youku.YouKu</packageName>
     </device>
-    <!--<device>-->
-        <!--<platform>ios</platform>-->
-        <!--<deviceType>iPhone</deviceType>-->
-        <!--<deviceId>00008030-000A294E3604802E</deviceId>-->
-        <!--<packageName>com.youku.YouKu</packageName>-->
-        <!--&lt;!&ndash;                        <packageName>com.tencent.live4iphone</packageName>&ndash;&gt;-->
-    <!--</device>-->
     <!--<device>-->
     <!--<platform>ios</platform>-->
     <!--<deviceType>iPad</deviceType>-->
