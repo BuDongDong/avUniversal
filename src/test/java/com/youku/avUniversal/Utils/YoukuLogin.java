@@ -218,6 +218,7 @@ public class YoukuLogin {
         secretField.sendKeys( scretNumber );
         logger.warn( "输入密码" );
         TotoroUtils.sleep( 2000 );
+        driver.click( 200, 200 );
 
         WebElement loginField = null;
         try {
