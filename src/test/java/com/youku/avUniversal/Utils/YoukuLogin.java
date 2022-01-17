@@ -151,19 +151,42 @@ public class YoukuLogin {
         try {
             WebElement unChoose = driver.findElementByName( "未勾选" );
             unChoose.click();
+            logger.warn( "已勾选隐私权限" );
         } catch (Exception e) {
             logger.warn( "没有出现隐私权限勾选框" );
         }
 
         TotoroUtils.sleep( 2000 );
 
-        //WebElement QQLoginButton = driver.findElementByName("账号/手机号登录");
-        WebElement QQLoginButton = driver.findElementByName( "手机号登录" );
-        if (QQLoginButton == null) {
+        //OcrElement ocrElement = ImageML.itamiOcrElement( "更多方式登录" );
+        //if (ocrElement != null) {
+        //    ocrElement.click( driver );
+        //    logger.warn( "更多方式登录ocr" );
+        //} else {
+        //
+        //}
+
+        WebElement QQLoginButton = null;
+        try {
+            QQLoginButton = driver.findElementByName( "手机号登录" );
+            QQLoginButton.click();
+            logger.warn( "已点击：手机号登录" );
+            TotoroUtils.sleep( 2000 );
+        } catch (Exception e) {
             logger.warn( "未发现'手机号登录'按钮" );
+            try {
+                QQLoginButton = driver.findElementByName( "更多方式登录" );
+                QQLoginButton.click();
+                TotoroUtils.sleep( 2000 );
+                QQLoginButton = driver.findElementByName( "短信登录" );
+                if (QQLoginButton != null) {
+                    QQLoginButton.click();
+                    TotoroUtils.sleep( 2000 );
+                }
+            } catch (Exception ee) {
+                logger.warn( "未发现'更多方式登录'按钮" );
+            }
         }
-        QQLoginButton.click();
-        TotoroUtils.sleep( 2000 );
 
         WebElement AccountLoginButton = driver.findElementByName( "账户密码登录" );
         AccountLoginButton.click();
