@@ -190,6 +190,7 @@ public class YoukuLogin {
 
         WebElement AccountLoginButton = driver.findElementByName( "账户密码登录" );
         AccountLoginButton.click();
+        logger.warn( "已点击账号密码登录" );
         TotoroUtils.sleep( 2000 );
         WebElement QQtext = driver.findElementByName( "请输入手机号码/邮箱" );
         QQtext.sendKeys( accountNumber );
