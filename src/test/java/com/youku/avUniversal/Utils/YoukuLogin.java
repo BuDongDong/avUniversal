@@ -158,14 +158,6 @@ public class YoukuLogin {
 
         TotoroUtils.sleep( 2000 );
 
-        //OcrElement ocrElement = ImageML.itamiOcrElement( "更多方式登录" );
-        //if (ocrElement != null) {
-        //    ocrElement.click( driver );
-        //    logger.warn( "更多方式登录ocr" );
-        //} else {
-        //
-        //}
-
         WebElement QQLoginButton = null;
         try {
             QQLoginButton = driver.findElementByName( "手机号登录" );
@@ -192,15 +184,43 @@ public class YoukuLogin {
         AccountLoginButton.click();
         logger.warn( "已点击账号密码登录" );
         TotoroUtils.sleep( 2000 );
-        WebElement QQtext = driver.findElementByName( "请输入手机号码/邮箱" );
-        QQtext.sendKeys( accountNumber );
+
+        WebElement accountField = null;
+        try {
+            accountField = driver.findElementByName( "loginSDK_textFiled_loginAccount" );
+        } catch (Exception e) {
+            try {
+                accountField = driver.findElementByName( "请输入手机号码/邮箱" );
+            } catch (Exception ee) {
+            }
+        }
+        if (accountField == null) {
+            logger.error( "输入账号失败" );
+            return;
+        }
+        accountField.sendKeys( accountNumber );
         logger.warn( "输入账号" );
         TotoroUtils.sleep( 2000 );
-        WebElement ScretNumber = driver.findElementByName( "请输入密码" );
-        ScretNumber.sendKeys( scretNumber );
+
+        WebElement secretField = null;
+        try {
+            secretField = driver.findElementByName( "loginSDK_textFiled_loginPwd" );
+        } catch (Exception e) {
+            try {
+                secretField = driver.findElementByName( "请输入密码" );
+            } catch (Exception ee) {
+            }
+        }
+        if (scretNumber == null) {
+            logger.error( "输入密码失败" );
+            return;
+        }
+        secretField.sendKeys( scretNumber );
         logger.warn( "输入密码" );
         TotoroUtils.sleep( 2000 );
         driver.findElementByName( "登录" ).click();
+        logger.warn( "点击登录" );
+
         TotoroUtils.sleep( 5000 );
         try {
             driver.findElementByName( "现在不" ).click();
