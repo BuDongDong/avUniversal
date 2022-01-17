@@ -41,12 +41,20 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     public String exeId = "null";
     public String testApp = "优酷";
-    public String showName = "鬮乆彡瓩 14";
-    //public String videoName = "第52期 : 优酷视频质量测试";
-    public String videoName = "优酷视频质量测试";
-    public String resolution = "1080P";
-    public String vid = "XNTEyNTQxMTYwNA==";
-    public int duration = 60;
+
+    public int duration = 30;
+
+    // ott测试视频
+    //public String showName = "鬮乆彡瓩 14";
+    //public String videoName = "优酷视频质量测试";
+    //public String resolution = "1080P";
+    //public String vid = "XNTEyNTQxMTYwNA==";
+
+    // hls5hd3_hbr_bit10
+    public String showName = "无";
+    public String videoName = "新疆琼库什台";
+    public String resolution = "高清";
+    public String vid = "XNTgzNDUyMjg5Mg==";
 
     private String more_dot_url
         = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/more_dot"
@@ -132,7 +140,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     public boolean openYoukuIphoneTestVideo() {
         logger.warn( "step1: 打开测试视频" );
-        Router.IphoneSchemeLaunch( driver, "youku://play?vid=XNTEyNTQxMTYwNA==&from=0&mode=1&quality=600" );
+        Router.IphoneSchemeLaunch( driver, String.format( "youku://play?vid=%s&from=0&mode=1&quality=600", vid ) );
         return true;
     }
 
