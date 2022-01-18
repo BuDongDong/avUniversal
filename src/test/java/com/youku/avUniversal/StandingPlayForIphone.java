@@ -69,6 +69,7 @@ public class StandingPlayForIphone extends PlayerBaseCase {
             String cmd = String.format( avDirectory + "xrecord --quicktime --id %s --out=%s --force --quality 540p", DEVICE.getDeviceId(),
                 recordDirectory + recordFileName );
             logger.warn( "命令:" + cmd );
+            logger.warn( "测试时长:" + duration );
 
             int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, duration );
             logger.warn( "step3.5 结束录像, 并上传oss调用魔镜分帧" );
