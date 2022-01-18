@@ -53,7 +53,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
     // hls5hd3_hbr_bit10
     public String showName = "无";
     public String videoName = "新疆琼库什台";
-    public String resolution = "高清";
+    public String resolution = "帧享影音";
     public String vid = "XNTgzNDUyMjg5Mg==";
 
     private String more_dot_url
