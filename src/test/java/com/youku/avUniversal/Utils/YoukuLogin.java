@@ -84,14 +84,18 @@ public class YoukuLogin {
                 //    QQLoginButtonDouble.click();
                 //}
             } else {
-                logger.warn( "未到了手机号登录按钮" );
-                WebElement LoginButton = driver.findElementByName( "登录/注册" );
-                LoginButton.click();
-                TotoroUtils.sleep( 1000 );
-                System.out.println( "账号/手机号登录 登录" );
-                WebElement QQLoginButton = driver.findElementByName( "手机号登录" );
-                QQLoginButton.click();
-                TotoroUtils.sleep( 1000 );
+                try {
+                    WebElement moreLoginButton = driver.findElementByName( "更多方式登录" );
+                    moreLoginButton.click();
+                    TotoroUtils.sleep( 2000 );
+                    moreLoginButton = driver.findElementById( "com.youku.phone:id/aliuser_oauth_2_layout" );
+                    if (moreLoginButton != null) {
+                        moreLoginButton.click();
+                        TotoroUtils.sleep( 2000 );
+                    }
+                } catch (Exception ee) {
+                    logger.warn( "未发现'更多方式登录'按钮" );
+                }
             }
         } catch (Exception e) {
             logger.error( "未找到手机号登录按钮" );
