@@ -70,7 +70,7 @@ public class StandingPlayForIphone extends PlayerBaseCase {
                 recordDirectory + recordFileName );
             logger.warn( "命令:" + cmd );
 
-            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, 60 );
+            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, duration );
             logger.warn( "step3.5 结束录像, 并上传oss调用魔镜分帧" );
 
             // 上传oss并调用魔镜进行分析
