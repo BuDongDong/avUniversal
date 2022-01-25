@@ -19,7 +19,7 @@
             <groupId>com.youku.yk_client_arch</groupId>
             <artifactId>itami_framework</artifactId>
             <!--<version>2.2.20.29.avUniversal-SNAPSHOT</version>-->
-            <version>2.2.20.56-SNAPSHOT</version>
+            <version>2.2.21.73-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
