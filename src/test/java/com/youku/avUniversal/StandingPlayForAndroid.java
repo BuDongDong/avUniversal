@@ -161,11 +161,11 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 logger.error( "上传oss失败" );
                 throwable.printStackTrace();
             }
-
+            driver.back();
             logger.warn( "step3.6 测试结束" );
         } catch (Exception e) {
             logger.warn( e.toString() );
-            backToEpisodesAndroid();
+            driver.back();
         }
     }
 
