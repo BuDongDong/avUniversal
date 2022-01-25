@@ -192,15 +192,35 @@ public class YoukuLogin {
                     }
                 } catch (Exception eee) {
                     logger.warn( "ocr也未找到'更多方式登录'" );
+                    try {
+                        QQLoginButton = driver.findElementByName( "账号密码登录" );
+                        QQLoginButton.click();
+                        TotoroUtils.sleep( 2000 );
+                        logger.warn( "尝试点击'账号密码登录'" );
+                    } catch ( Exception eeee) {
+                        logger.warn( "没有找到'账号密码登录'" );
+                    }
                 }
-
             }
         }
 
-        WebElement AccountLoginButton = driver.findElementByName( "账户密码登录" );
-        AccountLoginButton.click();
-        logger.warn( "已点击账号密码登录" );
+        try {
+            WebElement AccountLoginButton = driver.findElementByName( "账户密码登录" );
+            AccountLoginButton.click();
+            logger.warn( "已点击账号密码登录" );
+        } catch (Exception e) {
+            logger.warn( "无需点击'账号密码登录'" );
+        }
+
         TotoroUtils.sleep( 2000 );
+
+        try {
+            WebElement clearButton = driver.findElementByName( "清除文本" );
+            clearButton.click();
+            logger.warn( "已点击清除文本" );
+        } catch (Exception e) {
+            logger.warn( "无需点击'清除文本'" );
+        }
 
         WebElement accountField = null;
         try {
