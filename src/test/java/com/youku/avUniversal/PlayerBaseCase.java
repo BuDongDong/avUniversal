@@ -52,9 +52,15 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     // hls5hd3_hbr_bit10
     public String showName = "无";
-    public String videoName = "新疆大沙漠";
+    public String videoName = "新疆琼库什台";
     public String resolution = "帧享影音";
-    public String vid = "XNTgzNDUyNjMwNA==";
+    public String vid = "XNTgzNDUyMjg5Mg==";
+
+    // hls5qd3_hfr_hbr
+    //public String showName = "无";
+    //public String videoName = "新疆大沙漠";
+    //public String resolution = "帧享影音";
+    //public String vid = "XNTgzNDUyNjMwNA==";
 
     private String more_dot_url
         = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/more_dot"
