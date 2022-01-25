@@ -85,11 +85,11 @@ public class StandingPlayForIphone extends PlayerBaseCase {
                 logger.error( "上传oss失败" );
                 throwable.printStackTrace();
             }
-            driver.back();
+            iphoneYoukuFullDetailPageBack();
             logger.warn( "step3.6 测试结束" );
         } catch (Exception e) {
             logger.warn( e.toString() );
-            driver.back();
+            iphoneYoukuFullDetailPageBack();
         }
     }
 

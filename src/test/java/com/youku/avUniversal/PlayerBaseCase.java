@@ -52,9 +52,9 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     // hls5hd3_hbr_bit10
     public String showName = "无";
-    public String videoName = "新疆琼库什台";
+    public String videoName = "新疆大沙漠";
     public String resolution = "帧享影音";
-    public String vid = "XNTgzNDUyMjg5Mg==";
+    public String vid = "XNTgzNDUyNjMwNA==";
 
     private String more_dot_url
         = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/more_dot"
@@ -140,7 +140,9 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     public boolean openYoukuIphoneTestVideo() {
         logger.warn( "step1: 打开测试视频" );
-        Router.IphoneSchemeLaunch( driver, String.format( "youku://play?vid=%s&point=1000&mode=1&quality=600", vid ) );
+        String scheme = String.format( "youku://play?vid=%s&point=1000&mode=1&quality=600", vid );
+        Router.IphoneSchemeLaunch( driver, scheme );
+        logger.warn( scheme );
         return true;
     }
 
@@ -160,6 +162,23 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     public void setTestApp(String app) {
         testApp = app;
+    }
+
+    public void iphoneYoukuFullDetailPageBack() {
+        TotoroUtils.sleep( 5000 );
+        driver.click( 200, 200 );
+        TotoroUtils.sleep( 1000 );
+        WebElement backButton = null;
+        try {
+            backButton = driver.findElementByName( "返回" );
+            backButton.click();
+            TotoroUtils.sleep( 1000 );
+            backButton = driver.findElementByName( "返回" );
+            backButton.click();
+            logger.warn( "成功返回" );
+        } catch (Exception e) {
+            logger.warn( "退出播放页失败" );
+        }
     }
 
     public int loginAndroid() {
