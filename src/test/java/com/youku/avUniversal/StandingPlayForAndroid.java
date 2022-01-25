@@ -162,11 +162,13 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 throwable.printStackTrace();
             }
             driver.back();
+            TotoroUtils.sleep( 1000 );
             driver.back();
             logger.warn( "step3.6 测试结束" );
         } catch (Exception e) {
             logger.warn( e.toString() );
             driver.back();
+            TotoroUtils.sleep( 1000 );
             driver.back();
         }
     }
