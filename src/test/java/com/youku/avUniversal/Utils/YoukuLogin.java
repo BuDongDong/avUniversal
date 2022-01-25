@@ -181,6 +181,19 @@ public class YoukuLogin {
                 }
             } catch (Exception ee) {
                 logger.warn( "未发现'更多方式登录'按钮" );
+                try {
+                    OcrElement ocr = ImageML.itamiOcrElement( "更多方式登录" );
+                    driver.click( ocr.getX(), ocr.getY() );
+                    TotoroUtils.sleep( 2000 );
+                    QQLoginButton = driver.findElementByName( "短信登录" );
+                    if (QQLoginButton != null) {
+                        QQLoginButton.click();
+                        TotoroUtils.sleep( 2000 );
+                    }
+                } catch (Exception eee) {
+                    logger.warn( "ocr也未找到'更多方式登录'" );
+                }
+
             }
         }
 
