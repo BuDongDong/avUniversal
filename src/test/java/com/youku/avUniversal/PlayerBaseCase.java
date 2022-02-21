@@ -150,7 +150,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     public boolean openYoukuIphoneTestVideo() {
         logger.warn( "step1: 打开测试视频" );
-        String scheme = String.format( "youku://play?vid=%s&point=%d&mode=1&quality=600", startPoint, vid );
+        String scheme = String.format( "youku://play?vid=%s&point=%s&mode=1&quality=600", startPoint, vid );
         Router.IphoneSchemeLaunch( driver, scheme );
         logger.warn( scheme );
         return true;
@@ -159,7 +159,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
     public boolean openYoukuAndroidTestVideo() {
         logger.warn( "step1: 打开测试视频" );
         Router.AnroidSchemeLaunch( driver, String.format( "youku://play?source=stardetail\\&vid=%s\\&mode"
-            + "=full_horizontal\\&quality=400\\&point=%d", vid, startPoint ), DEVICE.getDeviceId() );
+            + "=full_horizontal\\&quality=400\\&point=%s", vid, startPoint ), DEVICE.getDeviceId() );
         return true;
     }
 
