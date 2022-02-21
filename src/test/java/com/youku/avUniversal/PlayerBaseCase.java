@@ -55,6 +55,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
     public String videoName = "新疆琼库什台";
     public String resolution = "帧享影音";
     public String vid = "XNTgzNDUyMjg5Mg==";
+    public int startPoint = 1000;
 
     // hls5qd3_hfr_hbr
     //public String showName = "无";
@@ -127,6 +128,9 @@ public class PlayerBaseCase extends ItamiBaseCase {
                     } else if ("duration".equals( ((JSONObject)each).getString( "name" ) )) {
                         duration = ((JSONObject)each).getIntValue( "value" );
                         logger.warn( "设置duration: " + duration );
+                    } else if ("startPoint".equals( ((JSONObject)each).getString( "name" ) )) {
+                        startPoint = ((JSONObject)each).getIntValue( "value" );
+                        logger.warn( "设置startPoint: " + startPoint );
                     }
                 }
             } catch (Exception e) {
@@ -146,7 +150,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     public boolean openYoukuIphoneTestVideo() {
         logger.warn( "step1: 打开测试视频" );
-        String scheme = String.format( "youku://play?vid=%s&point=1000&mode=1&quality=600", vid );
+        String scheme = String.format( "youku://play?vid=%s&point=%d&mode=1&quality=600", startPoint, vid );
         Router.IphoneSchemeLaunch( driver, scheme );
         logger.warn( scheme );
         return true;
@@ -155,7 +159,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
     public boolean openYoukuAndroidTestVideo() {
         logger.warn( "step1: 打开测试视频" );
         Router.AnroidSchemeLaunch( driver, String.format( "youku://play?source=stardetail\\&vid=%s\\&mode"
-            + "=full_horizontal\\&quality=400\\&point=0", vid ), DEVICE.getDeviceId() );
+            + "=full_horizontal\\&quality=400\\&point=%d", vid, startPoint ), DEVICE.getDeviceId() );
         return true;
     }
 
