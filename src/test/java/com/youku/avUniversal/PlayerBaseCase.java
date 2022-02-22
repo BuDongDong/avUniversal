@@ -150,7 +150,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     public boolean openYoukuIphoneTestVideo() {
         logger.warn( "step1: 打开测试视频" );
-        String scheme = String.format( "youku://play?vid=%s&point=%s&mode=1&quality=600", startPoint, vid );
+        String scheme = String.format( "youku://play?vid=%s&point=%s&mode=1&quality=600",vid, startPoint );
         Router.IphoneSchemeLaunch( driver, scheme );
         logger.warn( scheme );
         return true;
