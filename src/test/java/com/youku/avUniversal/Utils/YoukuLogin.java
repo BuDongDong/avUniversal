@@ -209,7 +209,14 @@ public class YoukuLogin {
             AccountLoginButton.click();
             logger.warn( "已点击账号密码登录" );
         } catch (Exception e) {
-            logger.warn( "无需点击'账号密码登录'" );
+            try {
+                OcrElement ocr = ImageML.itamiOcrElement( "账户密码登录" );
+                driver.click( ocr.getX(), ocr.getY() );
+                TotoroUtils.sleep( 2000 );
+                logger.warn( "通过ocr已点击账号密码登录" );
+            } catch (Exception ee) {
+                logger.warn( "未找到'账号密码登录'" );
+            }
         }
 
         TotoroUtils.sleep( 2000 );

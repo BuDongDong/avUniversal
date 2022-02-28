@@ -74,15 +74,15 @@ public class PlayerBaseCase extends ItamiBaseCase {
     //}
 
     public final static HashMap<String, String> VIP_ACCOUNT = new HashMap<String, String>() {{
-        put( "smallsq150", "1qaz0okm" );
-        put( "smallsq151", "1qaz0okm" );
+        put( "smallsq150", "1qaz0okm" );  // 2022.08.28
+        put( "smallsq160", "1qaz0okm" );
+        put( "smallsq170", "1qaz0okm" );
+        put( "smallsq151", "1qaz0okm" );  // 2022.09.09
         put( "smallsq152", "1qaz0okm" );
         put( "smallsq153", "1qaz0okm" );
         put( "smallsq154", "1qaz0okm" );
         put( "smallsq155", "1qaz0okm" );
         put( "smallsq156", "1qaz0okm" );
-        put( "smallsq160", "1qaz0okm" );
-        put( "smallsq170", "1qaz0okm" );
         put( "13161700207", "youkuvip123" );
     }};
 
