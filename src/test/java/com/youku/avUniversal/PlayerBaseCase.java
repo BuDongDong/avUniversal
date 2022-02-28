@@ -13,26 +13,18 @@ import com.totoro.client.internal.MobileDriver;
 import com.totoro.client.utils.ADBCommandUtils;
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.Constant;
-import com.youku.avUniversal.Utils.YoukuLogin;
-import com.youku.itami.config.AndroidDevice;
-import com.youku.itami.config.IPhoneDevice;
 import com.youku.itami.core.ItamiBaseCase;
-import com.youku.itami.core.Permission;
 import com.youku.itami.core.Router;
 import com.youku.itami.utility.ImgHandler.ImageML.ImageML;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerBaseCase extends ItamiBaseCase {
@@ -74,14 +66,41 @@ public class PlayerBaseCase extends ItamiBaseCase {
         + ".jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563381&Signature=y68lIqlQATTa2tTH7uSTt%2FlbZuQ%3D";
 
     //static {
-    //    DEVICE = new IPhoneDevice( null, null );
-    //    logger.warn( "尝试查找iphone设备: " + DEVICE.getDeviceId() );
-    //    if (DEVICE.getDeviceId() == null) {
-    //        DEVICE = new AndroidDevice( null, null, null );
-    //        logger.warn( "尝试查找android设备: " + DEVICE.getDeviceId() );
-    //    }
+    //    //DEVICE = new IPhoneDevice( null, null );
+    //    //logger.warn( "尝试查找iphone设备: " + DEVICE.getDeviceId() );
+    //    DEVICE = new AndroidDevice( null, null, null );
+    //    logger.warn( "尝试查找android设备: " + DEVICE.getDeviceId() );
     //    Permission.permissionYouku( DEVICE.getDeviceId(), DEVICE.getPackageName() );
     //}
+
+    public final static HashMap<String, String> VIP_ACCOUNT = new HashMap<String, String>() {{
+        put( "smallsq150", "1qaz0okm" );
+        put( "smallsq151", "1qaz0okm" );
+        put( "smallsq152", "1qaz0okm" );
+        put( "smallsq153", "1qaz0okm" );
+        put( "smallsq154", "1qaz0okm" );
+        put( "smallsq155", "1qaz0okm" );
+        put( "smallsq156", "1qaz0okm" );
+        put( "smallsq160", "1qaz0okm" );
+        put( "smallsq170", "1qaz0okm" );
+        put( "13161700207", "youkuvip123" );
+    }};
+
+    public ArrayList<String> getRandomVipAccount() {
+        ArrayList<String> result = new ArrayList<>();
+        try {
+            int index = new Random().nextInt( VIP_ACCOUNT.size() );
+            String accountName = VIP_ACCOUNT.keySet().toArray()[index].toString();
+            result.add( accountName );
+            result.add( VIP_ACCOUNT.get( accountName ) );
+        } catch (Exception e) {
+            result.clear();
+            result.add( "13161700207" );
+            result.add( "youkuvip123" );
+        }
+        logger.warn( "登录的账号为:" + result.get( 0 ) );
+        return result;
+    }
 
     @Before
     public void before() {
@@ -150,7 +169,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     public boolean openYoukuIphoneTestVideo() {
         logger.warn( "step1: 打开测试视频" );
-        String scheme = String.format( "youku://play?vid=%s&point=%s&mode=1&quality=600",vid, startPoint );
+        String scheme = String.format( "youku://play?vid=%s&point=%s&mode=1&quality=600", vid, startPoint );
         Router.IphoneSchemeLaunch( driver, scheme );
         logger.warn( scheme );
         return true;

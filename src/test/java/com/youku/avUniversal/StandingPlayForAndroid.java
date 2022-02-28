@@ -6,15 +6,14 @@ import com.youku.avUniversal.Utils.CmdExecutor;
 import com.youku.avUniversal.Utils.Constant;
 import com.youku.avUniversal.Utils.YoukuLogin;
 import com.youku.itami.utility.OssUpload.FileTypeEnum;
-import org.apache.http.client.fluent.Request;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -34,7 +33,9 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             return;
         }
 
-        YoukuLogin.YoukuLoginAndroid( driver, "13161700207", "youkuvip123" );
+        ArrayList<String> accountAndSecret= getRandomVipAccount();
+
+        YoukuLogin.YoukuLoginAndroid( driver, accountAndSecret.get( 0 ), accountAndSecret.get( 1 )  );
         logger.warn( "登录操作执行完成" );
         driver.closeApp( DEVICE.getPackageName() );
         logger.warn( "关闭app" );
