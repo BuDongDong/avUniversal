@@ -205,12 +205,12 @@ public class YoukuLogin {
         }
 
         try {
-            WebElement AccountLoginButton = driver.findElementByName( "账户密码登录" );
+            WebElement AccountLoginButton = driver.findElementByName( "账号密码登录" );
             AccountLoginButton.click();
             logger.warn( "已点击账号密码登录" );
         } catch (Exception e) {
             try {
-                OcrElement ocr = ImageML.itamiOcrElement( "账户密码登录" );
+                OcrElement ocr = ImageML.itamiOcrElement( "账号密码登录" );
                 driver.click( ocr.getX(), ocr.getY() );
                 TotoroUtils.sleep( 2000 );
                 logger.warn( "通过ocr已点击账号密码登录" );
