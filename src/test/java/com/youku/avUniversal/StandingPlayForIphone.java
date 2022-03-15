@@ -55,6 +55,8 @@ public class StandingPlayForIphone extends PlayerBaseCase {
             //if (!setResolutionAndroid()) {
             //    Log.addScreenShot( "第" + videoName + "集设置清晰度失败" );
             //}
+            logger.warn( "step3.3 设置弹幕关闭" );
+            closeBarrage();
 
             logger.warn( "step3.4 开始录像" );
             CmdExecutor cmdExecutor = new CmdExecutor();

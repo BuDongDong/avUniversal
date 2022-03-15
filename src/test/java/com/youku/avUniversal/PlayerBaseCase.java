@@ -630,6 +630,22 @@ public class PlayerBaseCase extends ItamiBaseCase {
         return inFullScreen;
     }
 
+    public void closeBarrage() {
+        int times = 3;
+        while (times > 0) {
+            driver.click( 200, 200 );
+            TotoroUtils.sleep( 1000 );
+            WebElement barrageBtn = waitForElement( driver, "开启弹幕，按钮", 4 );
+            if (barrageBtn != null) {
+                barrageBtn.click();
+                break;
+            } else {
+                TotoroUtils.sleep( 1000 );
+                times--;
+            }
+        }
+    }
+
     public void closeBarrageAndroid() {
         String barrageSettingInfo = null;
         String barrageSwitchInfo = null;
