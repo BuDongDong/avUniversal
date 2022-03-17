@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 
 public class CmdExecutor {
 
-    private static Logger logger = LoggerFactory.getLogger( StandingPlayForAndroid.class );
+    private static Logger logger = LoggerFactory.getLogger( CmdExecutor.class );
 
     private final static int BUFFER_SIZE = 1024;
 

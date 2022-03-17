@@ -38,7 +38,7 @@ public class StandingPlayForIphone extends PlayerBaseCase {
         driver.launchApp( DEVICE.getPackageName() );
         TotoroUtils.sleep( 5000 );
 
-        ArrayList<String> accountAndSecret= getRandomVipAccount();
+        ArrayList<String> accountAndSecret = getRandomVipAccount();
         YoukuLogin.YoukuLoginIPhone( driver, accountAndSecret.get( 0 ), accountAndSecret.get( 1 ) );
         logger.warn( "登录操作执行完成" );
         driver.closeApp( DEVICE.getPackageName() );
@@ -62,19 +62,26 @@ public class StandingPlayForIphone extends PlayerBaseCase {
             CmdExecutor cmdExecutor = new CmdExecutor();
 
             String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
-            String avDirectory = System.getProperty("user.home") + "/av-test/";
+            String avDirectory = System.getProperty( "user.home" ) + "/av-test/";
             String recordDirectory = avDirectory + "record/";
             String recordFileName = String.format( "%s-%s-%s.mp4", exeId, time, DEVICE.getDeviceId() );
             File folder = new File( recordDirectory );
             if (!folder.exists() || !folder.isDirectory()) {
                 folder.mkdirs();
             }
-            String cmd = String.format( avDirectory + "xrecord --quicktime --id %s --out=%s --force --quality 540p", DEVICE.getDeviceId(),
+            String cmd = String.format( avDirectory + "xrecord --quicktime --id %s --out=%s --force --quality 540p",
+                DEVICE.getDeviceId(),
                 recordDirectory + recordFileName );
             logger.warn( "命令:" + cmd );
             logger.warn( "测试时长:" + duration );
 
-            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, duration );
+            StringBuilder output = new StringBuilder();
+            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), output, duration );
+            if (output.toString().contains( "Device not found" )) {
+                String[] quicktime_args = {"/usr/bin/osascript", "/Users/yktest/av-test"};
+                cmdExecutor.execCmd( quicktime_args, null, 15 );
+                cmdExecutor.execCmd( cmd.split( " " ), output, duration );
+            }
             logger.warn( "step3.5 结束录像, 并上传oss调用魔镜分帧" );
 
             // 上传oss并调用魔镜进行分析
