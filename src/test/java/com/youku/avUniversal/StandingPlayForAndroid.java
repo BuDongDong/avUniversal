@@ -5,6 +5,7 @@ import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.CmdExecutor;
 import com.youku.avUniversal.Utils.Constant;
 import com.youku.avUniversal.Utils.YoukuLogin;
+import com.youku.itami.utility.Login.Login;
 import com.youku.itami.utility.OssUpload.FileTypeEnum;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
@@ -22,154 +23,164 @@ import java.util.Date;
  */
 public class StandingPlayForAndroid extends PlayerBaseCase {
 
-    private static Logger logger = LoggerFactory.getLogger( StandingPlayForAndroid.class );
+    private static Logger logger = LoggerFactory.getLogger(StandingPlayForAndroid.class);
     private int openMobizen = 1;
 
     @Test
     public void testStandingPlay() {
-        logger.warn( "开始测试123" );
+        logger.warn("开始测试123");
         if (showName == null || videoName == null) {
-            logger.warn( "参数异常，请检查测试片源、测试剧集的传参是否正确" );
+            logger.warn("参数异常，请检查测试片源、测试剧集的传参是否正确");
             return;
         }
 
-        ArrayList<String> accountAndSecret= getRandomVipAccount();
+        ArrayList<String> accountAndSecret = getRandomVipAccount();
 
-        YoukuLogin.YoukuLoginAndroid( driver, accountAndSecret.get( 0 ), accountAndSecret.get( 1 )  );
-        logger.warn( "登录操作执行完成" );
-        driver.closeApp( DEVICE.getPackageName() );
-        logger.warn( "关闭app" );
-        driver.launchApp( DEVICE.getPackageName() );
-        logger.warn( "重启app" );
-        TotoroUtils.sleep( 5000 );
+        try {
+            Login.login(driver, itamiBaseCase, ACCOUNT_HAVANA_ID, ACCOUNT_SSO_KEY);
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.warn("免密登录失败, 尝试UI自动化登录");
+        }
+        if (!YoukuLogin.YoukuLoginAndroid(driver, ACCOUNT_EMAIL, ACCOUNT_SECRET)) {
+            logger.warn("ui自动化登录失败");
+        }
+
+        logger.warn("登录操作执行完成");
+        driver.closeApp(DEVICE.getPackageName());
+        logger.warn("关闭app");
+        driver.launchApp(DEVICE.getPackageName());
+        logger.warn("重启app");
+        TotoroUtils.sleep(5000);
         try {
             openYoukuAndroidTestVideo();
-            TotoroUtils.sleep( 20000 );
+            TotoroUtils.sleep(20000);
 
-            logger.warn( "step3.3 设置分辨率为" + resolution );
-            if (!setResolutionAndroid()) {
-                Log.addScreenShot( "第" + videoName + "集设置清晰度失败" );
+            logger.warn("step3.3 设置分辨率为" + resolution);
+            if ((streamType == null || streamType.isEmpty()) && !setResolutionAndroid()) {
+                Log.addScreenShot("第" + videoName + "集设置清晰度失败");
             }
-            TotoroUtils.sleep( 5000 );
+            TotoroUtils.sleep(5000);
 
-            logger.warn( "step3.4 开始录像" );
+            logger.warn("step3.4 开始录像");
             CmdExecutor cmdExecutor = new CmdExecutor();
-            String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
-            String recordDirectory = System.getProperty( "user.home" ) + "/av-test/record/";
-            String recordFileName = String.format( "%s-%s-%s.mp4", exeId, time, DEVICE.getDeviceId() );
-            File folder = new File( recordDirectory );
+            String time = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+            String recordDirectory = System.getProperty("user.home") + "/av-test/record/";
+            String recordFileName = String.format("%s-%s-%s.mp4", exeId, time, DEVICE.getDeviceId());
+            File folder = new File(recordDirectory);
             if (!folder.exists() || !folder.isDirectory()) {
                 folder.mkdirs();
             }
 
             if (openMobizen == 1) {
-                ADBCommandUtils.exec( DEVICE.getDeviceId(), "shell", "rm", "-r", "/sdcard/Movies/Mobizen" );
-                TotoroUtils.sleep( 1000 );
+                ADBCommandUtils.exec(DEVICE.getDeviceId(), "shell", "rm", "-r", "/sdcard/Movies/Mobizen");
+                TotoroUtils.sleep(1000);
 
-                WebElement mobizen_home = waitForElement( driver, Constant.MOBIZEN_HOME_BUTTON, 4 );
+                WebElement mobizen_home = waitForElement(driver, Constant.MOBIZEN_HOME_BUTTON, 4);
                 if (mobizen_home != null) {
                     mobizen_home.click();
                 } else {
-                    logger.warn( "尝试kill调mobizen进程并重启" );
-                    ADBCommandUtils.exec( DEVICE.getDeviceId(), "shell", "am", "force-stop", "com.rsupport.mvagent" );
-                    ADBCommandUtils.exec( DEVICE.getDeviceId(), "shell", "monkey", "-p", "com.rsupport.mvagent", "1" );
-                    TotoroUtils.sleep( 2000 );
-                    mobizen_home = waitForElement( driver, Constant.MOBIZEN_HOME_BUTTON, 4 );
+                    logger.warn("尝试kill调mobizen进程并重启");
+                    ADBCommandUtils.exec(DEVICE.getDeviceId(), "shell", "am", "force-stop", "com.rsupport.mvagent");
+                    ADBCommandUtils.exec(DEVICE.getDeviceId(), "shell", "monkey", "-p", "com.rsupport.mvagent", "1");
+                    TotoroUtils.sleep(2000);
+                    mobizen_home = waitForElement(driver, Constant.MOBIZEN_HOME_BUTTON, 4);
                     if (mobizen_home != null) {
                         mobizen_home.click();
                     } else {
-                        logger.error( "录屏异常1" );
+                        logger.error("录屏异常1");
                     }
                 }
-                TotoroUtils.sleep( 1000 );
-                WebElement mobizen_record = waitForElement( driver, Constant.MOBIZEN_RECORD_BUTTON, 4 );
+                TotoroUtils.sleep(1000);
+                WebElement mobizen_record = waitForElement(driver, Constant.MOBIZEN_RECORD_BUTTON, 4);
                 if (mobizen_record != null) {
                     mobizen_record.click();
-                    logger.warn( "开始使用mobizen录屏" );
-                    TotoroUtils.sleep( duration * 1000 );
+                    logger.warn("开始使用mobizen录屏");
+                    TotoroUtils.sleep(duration * 1000);
                 } else {
-                    logger.error( "录屏异常2" );
+                    logger.error("录屏异常2");
                 }
 
-                mobizen_home = waitForElement( driver, Constant.MOBIZEN_HOME_BUTTON, 4 );
+                mobizen_home = waitForElement(driver, Constant.MOBIZEN_HOME_BUTTON, 4);
                 if (mobizen_home != null) {
                     mobizen_home.click();
                 } else {
-                    logger.error( "录屏异常3" );
+                    logger.error("录屏异常3");
                 }
-                TotoroUtils.sleep( 1000 );
-                WebElement mobizen_stop = waitForElement( driver, Constant.MOBIZEN_STOP_BUTTON, 4 );
+                TotoroUtils.sleep(1000);
+                WebElement mobizen_stop = waitForElement(driver, Constant.MOBIZEN_STOP_BUTTON, 4);
                 if (mobizen_stop != null) {
                     mobizen_stop.click();
-                    logger.warn( "结束录屏" );
+                    logger.warn("结束录屏");
                 } else {
-                    logger.error( "录屏异常4" );
+                    logger.error("录屏异常4");
                 }
-                TotoroUtils.sleep( 1000 );
+                TotoroUtils.sleep(1000);
 
-                WebElement mobizen_close = waitForElement( driver, Constant.MOBIZEN_CLOSE_BUTTON, 4 );
-                if (mobizen_close != null && (mobizen_close.getText().contains( "关闭" ) || mobizen_close.getText()
-                    .contains( "以后再说" ))) {
+                WebElement mobizen_close = waitForElement(driver, Constant.MOBIZEN_CLOSE_BUTTON, 4);
+                if (mobizen_close != null && (mobizen_close.getText().contains("关闭") || mobizen_close.getText()
+                    .contains("以后再说"))) {
                     mobizen_close.click();
-                    logger.warn( "关闭录屏" );
+                    logger.warn("关闭录屏");
                 } else {
-                    logger.error( "录屏异常5" );
+                    logger.error("录屏异常5");
                 }
-                TotoroUtils.sleep( 1000 );
+                TotoroUtils.sleep(1000);
+                driver.back();
+                TotoroUtils.sleep(1000);
+                driver.back();
 
-                logger.warn( "开始拷贝视频文件" );
+                logger.warn("开始拷贝视频文件");
                 String tmpDirectory = recordDirectory + "tmp/" + exeId + "/";
-                File tmpFolder = new File( tmpDirectory );
+                File tmpFolder = new File(tmpDirectory);
                 if (!tmpFolder.exists() || !tmpFolder.isDirectory()) {
                     tmpFolder.mkdirs();
                 }
-                ADBCommandUtils.exec( DEVICE.getDeviceId(), "pull", "/sdcard/Movies/Mobizen", tmpDirectory );
+                ADBCommandUtils.exec(DEVICE.getDeviceId(), "pull", "/sdcard/Movies/Mobizen", tmpDirectory);
                 String mobizenDirectory = tmpDirectory + "Mobizen/";
-                File mobizenFolder = new File( mobizenDirectory );
+                File mobizenFolder = new File(mobizenDirectory);
                 if (mobizenFolder.exists()) {
                     String[] files = mobizenFolder.list();
                     if (files.length > 0) {
-                        File oldFile = new File( mobizenDirectory + files[0] );
-                        File newFile = new File( recordDirectory + recordFileName );
-                        if (oldFile.renameTo( newFile )) {
-                            logger.warn( "文件移动成功" );
+                        File oldFile = new File(mobizenDirectory + files[0]);
+                        File newFile = new File(recordDirectory + recordFileName);
+                        if (oldFile.renameTo(newFile)) {
+                            logger.warn("文件移动成功");
                         } else {
-                            logger.error( "文件移动失败" );
+                            logger.error("文件移动失败");
                         }
                     }
                 }
             } else {
                 String cmd = String.format(
                     "scrcpy -s %s --max-fps 60 --bit-rate 2M --max-size 1080 -Nr %s", DEVICE.getDeviceId(),
-                    recordDirectory + recordFileName );
-                logger.warn( "命令:" + cmd );
-                int exitCode = cmdExecutor.execCmd( cmd.split( " " ), null, duration );
+                    recordDirectory + recordFileName);
+                logger.warn("命令:" + cmd);
+                int exitCode = cmdExecutor.execCmd(cmd.split(" "), null, duration);
             }
 
-            logger.warn( "step3.5 结束录像, 并上传oss调用魔镜分帧" );
+            logger.warn("step3.5 结束录像, 并上传oss调用魔镜分帧");
             try {
-                File recordFile = new File( recordDirectory + recordFileName );
+                File recordFile = new File(recordDirectory + recordFileName);
                 if (recordFile.exists()) {
-                    String ossUrl = ossUpload.uploadFileToLongTerm( recordDirectory + recordFileName,
-                        recordFileName, FileTypeEnum.ITAMI );
-                    logger.warn( "录屏ossUrl:" + ossUrl );
+                    String ossUrl = ossUpload.uploadFileToLongTerm(recordDirectory + recordFileName,
+                        recordFileName, FileTypeEnum.ITAMI);
+                    logger.warn("录屏ossUrl:" + ossUrl);
                     // 触发魔镜分帧
-                    SplitFrame.callMirror( ossUrl, exeId );
+                    SplitFrame.callMirror(ossUrl, exeId);
                 } else {
-                    logger.error( "未找到录屏文件:" + recordDirectory + recordFileName );
+                    logger.error("未找到录屏文件:" + recordDirectory + recordFileName);
                 }
             } catch (Throwable throwable) {
-                logger.error( "上传oss失败" );
+                logger.error("上传oss失败");
                 throwable.printStackTrace();
             }
-            driver.back();
-            TotoroUtils.sleep( 1000 );
-            driver.back();
-            logger.warn( "step3.6 测试结束" );
+
+            logger.warn("step3.6 测试结束");
         } catch (Exception e) {
-            logger.warn( e.toString() );
+            logger.warn(e.toString());
             driver.back();
-            TotoroUtils.sleep( 1000 );
+            TotoroUtils.sleep(1000);
             driver.back();
         }
     }

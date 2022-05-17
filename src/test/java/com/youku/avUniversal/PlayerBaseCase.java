@@ -5,6 +5,16 @@ package com.youku.avUniversal;
  * @date 2021/9/18 1:41 PM
  */
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -16,11 +26,11 @@ import com.totoro.client.utils.ADBCommandUtils;
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.Constant;
 import com.youku.itami.config.AndroidDevice;
-import com.youku.itami.config.IPhoneDevice;
 import com.youku.itami.core.ItamiBaseCase;
 import com.youku.itami.core.Permission;
 import com.youku.itami.core.Router;
 import com.youku.itami.utility.ImgHandler.ImageML.ImageML;
+import com.youku.itami.utility.Login.Login;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.Dimension;
@@ -28,11 +38,6 @@ import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 public class PlayerBaseCase extends ItamiBaseCase {
 
@@ -43,25 +48,21 @@ public class PlayerBaseCase extends ItamiBaseCase {
 
     public int duration = 30;
 
-    // ott测试视频
-    //public String showName = "鬮乆彡瓩 14";
-    //public String videoName = "优酷视频质量测试";
-    //public String resolution = "1080P";
-    //public String vid = "XNTEyNTQxMTYwNA==";
-
-    // hls5hd3_hbr_bit10
-    public String showName = "无";
-    public String videoName = "新疆琼库什台";
-    public String resolution = "帧享影音";
-    public String vid = "XNTgzNDUyMjg5Mg==";
-    public int startPoint = 1000;
-    public String streamType = "";
-
-    // hls5qd3_hfr_hbr
+    // hls5hd3_hbr_bit10  ------- old
     //public String showName = "无";
-    //public String videoName = "新疆大沙漠";
+    //public String videoName = "新疆琼库什台";
     //public String resolution = "帧享影音";
-    //public String vid = "XNTgzNDUyNjMwNA==";
+    //public String vid = "XNTgzNDUyMjg5Mg==";
+    //public int startPoint = 1000;
+    //public String streamType = "";
+
+    public String showName = "无";
+    public String videoName = "zongyi_test";
+    public String resolution = "帧享影音";
+    public String vid = "XNTg2MzA3MzYzMg==";
+    public int startPoint = 1000;
+    public String streamType = "hls5hd3_hfr_hbr_bit10";
+
 
     private String more_dot_url
         = "https://av-universal.oss-cn-beijing.aliyuncs.com/res_pic/more_dot"
@@ -93,6 +94,16 @@ public class PlayerBaseCase extends ItamiBaseCase {
         put("smallsq156", "1qaz0okm");
         put("13161700207", "youkuvip123");
     }};
+
+
+    public static final long ACCOUNT_HAVANA_ID = 2213998464099L;
+    public static final String ACCOUNT_SSO_KEY = "39de704183a6144799f08c2e";
+    public static final String ACCOUNT_EMAIL = "yk.66677acc4d@alitest.xyz";
+    public static final String ACCOUNT_SECRET = "yy982393";
+    public static final String ACCOUNT_YTID = "3386102874";
+    //public static void login(MobileDriver driver, ItamiBaseCase baseCase, long havanaId, String ssoKey) {}
+    //public static void androidLogin(long havanaId, String ssoKey, String udid)
+    //public static void iosLogin(MobileDriver driver, long havanaId, String ssoKey, String udid)
 
     public ArrayList<String> getRandomVipAccount() {
         ArrayList<String> result = new ArrayList<>();
@@ -241,89 +252,6 @@ public class PlayerBaseCase extends ItamiBaseCase {
         } catch (Exception e) {
             logger.warn("退出播放页失败");
         }
-    }
-
-    public int loginAndroid() {
-        WebElement myBtn = waitForElement(driver, Constant.LOGIN_ANDROID_MY_TEXT, 5);
-        if (myBtn != null) {
-            myBtn.click();
-            TotoroUtils.sleep(2000);
-        } else {
-            logger.warn("在" + testApp + "中未找到我的按钮");
-            return -1;
-        }
-
-        if (testApp.equals("优酷")) {
-            WebElement vipText = waitForElement(driver, Constant.LOGIN_ANDROID_YOUKU_UCENTER_GUIDE_ID, 3);
-            if (vipText != null) {
-                String currentUser = vipText.getText();
-                if (currentUser.equals(Constant.LOGIN_ANDROID_YOUKU_LOGINED_TEXT)) {
-                    //需要登录
-                    vipText.click();
-                    TotoroUtils.sleep(2000);
-                } else {
-                    logger.warn("在" + testApp + "已登录VIP");
-                    return 0;
-                }
-            }
-            WebElement passportBtn = waitForElement(driver, Constant.LOGIN_ANDROID_YOUKU_SMS_ID, 3);
-            if (passportBtn == null) {
-                WebElement ucenterGuideBtn = waitForElement(driver,
-                    Constant.LOGIN_ANDROID_YOUKU_UCENTER_GUIDE_ID, 3);
-                if (ucenterGuideBtn != null) {
-                    ucenterGuideBtn.click();
-                    TotoroUtils.sleep(2000);
-                } else {
-                    logger.warn("在" + testApp + "我的界面未找到登录/注册按钮");
-                    return -1;
-                }
-                passportBtn = waitForElement(driver, Constant.LOGIN_ANDROID_YOUKU_SMS_ID, 3);
-                if (passportBtn != null) {
-                    passportBtn.click();
-                    TotoroUtils.sleep(2000);
-                } else {
-                    logger.warn("在" + testApp + "我的界面点击登录后未找到账号/手机号登录按钮");
-                    return -1;
-                }
-            } else {
-                passportBtn.click();
-                TotoroUtils.sleep(2000);
-            }
-
-            WebElement switchText = waitForElement(driver, Constant.LOGIN_ANDROID_YOUKU_SWITCH_ID, 3);
-            if (switchText != null) {
-                String currentText = switchText.getText();
-                if (currentText.equals(Constant.LOGIN_ANDROID_YOUKU_SWITCH_TEXT)) {
-                    switchText.click();
-                    TotoroUtils.sleep(1000);
-                }
-            }
-
-            WebElement accountText = waitForElement(driver, Constant.LOGIN_ANDROID_YOUKU_ACCOUNT_ID, 3);
-            WebElement pwdText = waitForElement(driver, Constant.LOGIN_ANDROID_YOUKU_PWD_ID, 3);
-            if (accountText == null || pwdText == null) {
-                logger.warn("在" + testApp + "找不到账号或者密码输入框");
-                return -1;
-            }
-            accountText.sendKeys(Constant.LOGIN_ANDROID_YOUKU_ACCOUNT);
-            pwdText.sendKeys(Constant.LOGIN_ANDROID_YOUKU_PWD);
-
-            WebElement loginBtn = waitForElement(driver, Constant.LOGIN_ANDROID_YOUKU_LOGIN_BTN_ID, 3);
-            if (loginBtn != null) {
-                loginBtn.click();
-                TotoroUtils.sleep(3000);
-            } else {
-                logger.warn("在" + testApp + "找不到登录按钮");
-                return -1;
-            }
-
-            WebElement notNowBtn = waitForElement(driver, "现在不", 3);
-            if (notNowBtn != null) {
-                notNowBtn.click();
-                TotoroUtils.sleep(2000);
-            }
-        }
-        return 1;
     }
 
     public boolean openAndroidSearchPage() {

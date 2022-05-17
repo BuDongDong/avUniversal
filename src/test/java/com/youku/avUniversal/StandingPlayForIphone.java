@@ -3,6 +3,7 @@ package com.youku.avUniversal;
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.CmdExecutor;
 import com.youku.avUniversal.Utils.YoukuLogin;
+import com.youku.itami.utility.Login.Login;
 import com.youku.itami.utility.OssUpload.FileTypeEnum;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
@@ -20,85 +21,94 @@ import java.util.Date;
  */
 public class StandingPlayForIphone extends PlayerBaseCase {
 
-    private static Logger logger = LoggerFactory.getLogger( StandingPlayForIphone.class );
+    private static Logger logger = LoggerFactory.getLogger(StandingPlayForIphone.class);
 
     @Test
     public void testStandingPlay() {
-        logger.warn( "开始测试" );
+        logger.warn("开始测试");
         if (showName == null || videoName == null) {
-            logger.warn( "参数异常，请检查测试片源、测试剧集的传参是否正确" );
+            logger.warn("参数异常，请检查测试片源、测试剧集的传参是否正确");
             return;
         }
 
-        WebElement UserCenterButton = driver.findElementByName( "我的" );
+        WebElement UserCenterButton = driver.findElementByName("我的");
         UserCenterButton.click();
-        TotoroUtils.sleep( 2000 );
-        driver.closeApp( DEVICE.getPackageName() );
-        logger.warn( "关闭app" );
-        driver.launchApp( DEVICE.getPackageName() );
-        TotoroUtils.sleep( 5000 );
+        TotoroUtils.sleep(2000);
+        driver.closeApp(DEVICE.getPackageName());
+        logger.warn("关闭app");
+        driver.launchApp(DEVICE.getPackageName());
+        TotoroUtils.sleep(5000);
 
         ArrayList<String> accountAndSecret = getRandomVipAccount();
-        YoukuLogin.YoukuLoginIPhone( driver, accountAndSecret.get( 0 ), accountAndSecret.get( 1 ) );
-        logger.warn( "登录操作执行完成" );
-        driver.closeApp( DEVICE.getPackageName() );
-        logger.warn( "关闭app" );
-        driver.launchApp( DEVICE.getPackageName() );
-        logger.warn( "重启app" );
-        TotoroUtils.sleep( 5000 );
+        try {
+            Login.login(driver, itamiBaseCase, ACCOUNT_HAVANA_ID, ACCOUNT_SSO_KEY);
+        } catch (Exception e) {
+            logger.warn("免密登录失败, 尝试ui登录");
+
+        }
+        if (!YoukuLogin.YoukuLoginIPhone(driver,  ACCOUNT_EMAIL, ACCOUNT_SECRET)) {
+            logger.warn("ui自动化登录失败");
+        }
+
+        logger.warn("登录操作执行完成");
+        driver.closeApp(DEVICE.getPackageName());
+        logger.warn("关闭app");
+        driver.launchApp(DEVICE.getPackageName());
+        logger.warn("重启app");
+        TotoroUtils.sleep(5000);
 
         try {
             openYoukuIphoneTestVideo();
-            TotoroUtils.sleep( 10000 );
+            TotoroUtils.sleep(10000);
 
             //logger.warn( "step3.3 设置分辨率为" + resolution );
             //if (!setResolutionAndroid()) {
             //    Log.addScreenShot( "第" + videoName + "集设置清晰度失败" );
             //}
-            logger.warn( "step3.3 设置弹幕关闭" );
+            logger.warn("step3.3 设置弹幕关闭");
             closeBarrage();
 
-            logger.warn( "step3.4 开始录像" );
+            logger.warn("step3.4 开始录像");
             CmdExecutor cmdExecutor = new CmdExecutor();
 
-            String time = new SimpleDateFormat( "yyyyMMddHHmmssSSS" ).format( new Date() );
-            String avDirectory = System.getProperty( "user.home" ) + "/av-test/";
+            String time = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+            String avDirectory = System.getProperty("user.home") + "/av-test/";
             String recordDirectory = avDirectory + "record/";
-            String recordFileName = String.format( "%s-%s-%s.mp4", exeId, time, DEVICE.getDeviceId() );
-            File folder = new File( recordDirectory );
+            String recordFileName = String.format("%s-%s-%s.mp4", exeId, time, DEVICE.getDeviceId());
+            File folder = new File(recordDirectory);
             if (!folder.exists() || !folder.isDirectory()) {
                 folder.mkdirs();
             }
-            String cmd = String.format( avDirectory + "xrecord --quicktime --id %s --out=%s --force --quality 540p",
+            String cmd = String.format(avDirectory + "xrecord --quicktime --id %s --out=%s --force --quality 540p",
                 DEVICE.getDeviceId(),
-                recordDirectory + recordFileName );
-            logger.warn( "命令:" + cmd );
-            logger.warn( "测试时长:" + duration );
+                recordDirectory + recordFileName);
+            logger.warn("命令:" + cmd);
+            logger.warn("测试时长:" + duration);
 
             StringBuilder output = new StringBuilder();
-            int exitCode = cmdExecutor.execCmd( cmd.split( " " ), output, duration );
-            if (output.toString().contains( "Device not found" )) {
+            int exitCode = cmdExecutor.execCmd(cmd.split(" "), output, duration);
+            if (output.toString().contains("Device not found")) {
                 String[] quicktime_args = {"/usr/bin/osascript", "/Users/yktest/av-test"};
-                cmdExecutor.execCmd( quicktime_args, null, 15 );
-                cmdExecutor.execCmd( cmd.split( " " ), output, duration );
+                cmdExecutor.execCmd(quicktime_args, null, 15);
+                cmdExecutor.execCmd(cmd.split(" "), output, duration);
             }
-            logger.warn( "step3.5 结束录像, 并上传oss调用魔镜分帧" );
+            logger.warn("step3.5 结束录像, 并上传oss调用魔镜分帧");
 
             // 上传oss并调用魔镜进行分析
             try {
-                String ossUrl = ossUpload.uploadFileToLongTerm( recordDirectory + recordFileName,
-                    recordFileName, FileTypeEnum.ITAMI );
-                logger.warn( "录屏ossUrl:" + ossUrl );
+                String ossUrl = ossUpload.uploadFileToLongTerm(recordDirectory + recordFileName,
+                    recordFileName, FileTypeEnum.ITAMI);
+                logger.warn("录屏ossUrl:" + ossUrl);
                 // 触发魔镜分帧
-                SplitFrame.callMirror( ossUrl, exeId );
+                SplitFrame.callMirror(ossUrl, exeId);
             } catch (Throwable throwable) {
-                logger.error( "上传oss失败" );
+                logger.error("上传oss失败");
                 throwable.printStackTrace();
             }
             iphoneYoukuFullDetailPageBack();
-            logger.warn( "step3.6 测试结束" );
+            logger.warn("step3.6 测试结束");
         } catch (Exception e) {
-            logger.warn( e.toString() );
+            logger.warn(e.toString());
             iphoneYoukuFullDetailPageBack();
         }
     }

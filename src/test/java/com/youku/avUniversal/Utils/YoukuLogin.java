@@ -3,9 +3,6 @@ package com.youku.avUniversal.Utils;
 import com.totoro.client.deeplearning.adstract.OcrElement;
 import com.totoro.client.internal.MobileDriver;
 import com.totoro.client.utils.TotoroUtils;
-import com.youku.itami.config.AndroidDevice;
-import com.youku.itami.config.Device;
-import com.youku.itami.config.IPhoneDevice;
 import com.youku.itami.core.ItamiBaseCase;
 import com.youku.itami.utility.ImgHandler.ImageML.ImageML;
 import org.openqa.selenium.WebElement;
@@ -21,18 +18,9 @@ public class YoukuLogin {
 
     private static Logger logger = LoggerFactory.getLogger( YoukuLogin.class );
 
-    //public static void login(ItamiBaseCase baseCase, String accountNumber, String scretNumber) {
-    //    Device DEVICE = baseCase.DEVICE;
-    //    MobileDriver driver = baseCase.driver;
-    //    if (DEVICE instanceof AndroidDevice) {
-    //        YoukuLoginAndroid( driver, accountNumber, scretNumber );
-    //    } else if (DEVICE instanceof IPhoneDevice) {
-    //        YoukuLoginIPhone( driver, accountNumber, scretNumber );
-    //    }
-    //}
-
-    public static void YoukuLoginAndroid(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
+    public static boolean YoukuLoginAndroid(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
         TotoroUtils.sleep( 5000 );
+        boolean result = true;
         logger.warn( "切换到我的Tab" );
         try {
             WebElement UserCenterButton = driver.findElementByName( "我的" );
@@ -54,7 +42,7 @@ public class YoukuLogin {
                     logger.warn( "弹出了登录框了" );
                 } else {
                     logger.warn( "已经是登录状态了" );
-                    return;
+                    return true;
                 }
             } catch (Exception e) {
                 logger.warn( "未成功弹出登录框" );
@@ -115,7 +103,7 @@ public class YoukuLogin {
             //text.sendKeys("346405176@qq.com");
             text.sendKeys( accountNumber );
         } catch (Exception e) {
-            System.out.println( "请输入手机号码/邮箱" );
+            System.out.println( "未找到'请输入手机号码/邮箱'" );
         }
         TotoroUtils.sleep( 1000 );
         try {
@@ -123,22 +111,26 @@ public class YoukuLogin {
             //ScretNumber.sendKeys("yxf123456");
             ScretNumber.sendKeys( scretNumber );
         } catch (Exception e) {
-            System.out.println( "未找到密码输入框" );
+            System.out.println("未找到'请输入密码'");
+            try {
+                WebElement ScretNumber = driver.findElementById(
+                    ItamiBaseCase.DEVICE.getPackageName() + ":id/aliuser_login_password_et" );
+                ScretNumber.sendKeys( scretNumber );
+            } catch (Exception ee) {
+                System.out.println( "未找到低端机器密码输入框" );
+                result = false;
+            }
         }
-        try {
-            WebElement ScretNumber = driver.findElementById(
-                ItamiBaseCase.DEVICE.getPackageName() + ":id/aliuser_login_password_et" );
-            ScretNumber.sendKeys( scretNumber );
-        } catch (Exception e) {
-            System.out.println( "未找到低端机器密码输入框" );
-        }
+
         TotoroUtils.sleep( 5000 );
         driver.findElementByNameWithoutExp( "登录" ).click();
         System.out.println( "登录" );
         TotoroUtils.sleep( 3000 );
+        return result;
     }
 
-    public static void YoukuLoginIPhone(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
+    public static boolean YoukuLoginIPhone(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
+        boolean result = true;
         TotoroUtils.sleep( 5000 );
         WebElement UserCenterButton = driver.findElementByName( "我的" );
         UserCenterButton.click();
@@ -148,7 +140,7 @@ public class YoukuLogin {
             LoginButton.click();
         } catch (Exception e) {
             System.out.println( "未找到登录/注册" );
-            return;
+            return true;
         }
         TotoroUtils.sleep( 2000 );
 
@@ -240,7 +232,7 @@ public class YoukuLogin {
         }
         if (accountField == null) {
             logger.error( "输入账号失败" );
-            return;
+            return false;
         }
         accountField.sendKeys( accountNumber );
         logger.warn( "输入账号" );
@@ -257,7 +249,7 @@ public class YoukuLogin {
         }
         if (secretField == null) {
             logger.error( "输入密码失败" );
-            return;
+            return false;
         }
         secretField.sendKeys( scretNumber );
         logger.warn( "输入密码" );
@@ -275,7 +267,7 @@ public class YoukuLogin {
         }
         if (loginField == null) {
             logger.error( "登录失败" );
-            return;
+            return false;
         }
         loginField.click();
         logger.warn( "点击登录" );
@@ -299,5 +291,6 @@ public class YoukuLogin {
         //            ItamiImageFeature iit2=it2.get(0);
         //            driver.click(iit2.getX(),iit2.getY());
         //        }
+        return result;
     }
 }
