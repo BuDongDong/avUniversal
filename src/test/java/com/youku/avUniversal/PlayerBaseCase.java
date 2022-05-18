@@ -76,8 +76,8 @@ public class PlayerBaseCase extends ItamiBaseCase {
         + ".jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563381&Signature=y68lIqlQATTa2tTH7uSTt%2FlbZuQ%3D";
 
     static {
-        DEVICE = new IPhoneDevice( null, null );
-        logger.warn( "尝试查找iphone设备: " + DEVICE.getDeviceId() );
+        //DEVICE = new IPhoneDevice( null, null );
+        //logger.warn( "尝试查找iphone设备: " + DEVICE.getDeviceId() );
         //DEVICE = new AndroidDevice(null, null, null);
         //logger.warn("尝试查找android设备: " + DEVICE.getDeviceId());
         //Permission.permissionYouku(DEVICE.getDeviceId(), DEVICE.getPackageName());
