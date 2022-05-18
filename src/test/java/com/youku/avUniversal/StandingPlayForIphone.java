@@ -46,7 +46,29 @@ public class StandingPlayForIphone extends PlayerBaseCase {
             logger.warn("免密登录失败, 尝试ui登录");
 
         }
-        if (!YoukuLogin.YoukuLoginIPhone(driver,  ACCOUNT_EMAIL, ACCOUNT_SECRET)) {
+
+        WebElement notNowBtn = waitForElement(driver, "现在不", 3);
+        if (null != notNowBtn) {
+            notNowBtn.click();
+            TotoroUtils.sleep(1000);
+        }
+
+        WebElement successConfirmBtn = waitForElement(driver, "确定", 3);
+        if (null != successConfirmBtn) {
+            successConfirmBtn.click();
+            TotoroUtils.sleep(1000);
+        }
+
+        WebElement loginStatusConfirmBtn = waitForElement(driver, "确定", 3);
+        if (null != loginStatusConfirmBtn) {
+            loginStatusConfirmBtn.click();
+            TotoroUtils.sleep(1000);
+        }
+
+        driver.back();
+        TotoroUtils.sleep(1000);
+
+        if (!YoukuLogin.YoukuLoginIPhone(driver, ACCOUNT_EMAIL, ACCOUNT_SECRET)) {
             logger.warn("ui自动化登录失败");
         }
 

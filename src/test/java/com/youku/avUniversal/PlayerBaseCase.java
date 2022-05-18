@@ -26,6 +26,7 @@ import com.totoro.client.utils.ADBCommandUtils;
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.Constant;
 import com.youku.itami.config.AndroidDevice;
+import com.youku.itami.config.IPhoneDevice;
 import com.youku.itami.core.ItamiBaseCase;
 import com.youku.itami.core.Permission;
 import com.youku.itami.core.Router;
@@ -75,11 +76,11 @@ public class PlayerBaseCase extends ItamiBaseCase {
         + ".jpg?OSSAccessKeyId=LTAIDHmh6a8P8brD&Expires=1949563381&Signature=y68lIqlQATTa2tTH7uSTt%2FlbZuQ%3D";
 
     static {
-        //DEVICE = new IPhoneDevice( null, null );
-        //logger.warn( "尝试查找iphone设备: " + DEVICE.getDeviceId() );
-        DEVICE = new AndroidDevice(null, null, null);
-        logger.warn("尝试查找android设备: " + DEVICE.getDeviceId());
-        Permission.permissionYouku(DEVICE.getDeviceId(), DEVICE.getPackageName());
+        DEVICE = new IPhoneDevice( null, null );
+        logger.warn( "尝试查找iphone设备: " + DEVICE.getDeviceId() );
+        //DEVICE = new AndroidDevice(null, null, null);
+        //logger.warn("尝试查找android设备: " + DEVICE.getDeviceId());
+        //Permission.permissionYouku(DEVICE.getDeviceId(), DEVICE.getPackageName());
     }
 
     public final static HashMap<String, String> VIP_ACCOUNT = new HashMap<String, String>() {{
