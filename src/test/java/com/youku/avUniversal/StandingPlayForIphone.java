@@ -39,7 +39,6 @@ public class StandingPlayForIphone extends PlayerBaseCase {
         driver.launchApp(DEVICE.getPackageName());
         TotoroUtils.sleep(5000);
 
-        ArrayList<String> accountAndSecret = getRandomVipAccount();
         try {
             Login.login(driver, itamiBaseCase, ACCOUNT_HAVANA_ID, ACCOUNT_SSO_KEY);
         } catch (Exception e) {
@@ -47,26 +46,38 @@ public class StandingPlayForIphone extends PlayerBaseCase {
 
         }
 
-        WebElement notNowBtn = waitForElement(driver, "现在不", 3);
-        if (null != notNowBtn) {
-            notNowBtn.click();
-            TotoroUtils.sleep(1000);
+        try {
+            driver.findElementByName( "现在不" ).click();
+        } catch (Exception e) {
+            System.out.println( "未找到对应按钮" );
+        }
+        try {
+            driver.findElementByName( "暂不需要绑定" ).click();
+        } catch (Exception e) {
+
+            System.out.println( "未找到对应按钮" );
         }
 
-        WebElement successConfirmBtn = waitForElement(driver, "确定", 3);
-        if (null != successConfirmBtn) {
-            successConfirmBtn.click();
-            TotoroUtils.sleep(1000);
-        }
-
-        WebElement loginStatusConfirmBtn = waitForElement(driver, "确定", 3);
-        if (null != loginStatusConfirmBtn) {
-            loginStatusConfirmBtn.click();
-            TotoroUtils.sleep(1000);
-        }
-
-        driver.back();
-        TotoroUtils.sleep(1000);
+        //WebElement notNowBtn = waitForElement(driver, "现在不", 3);
+        //if (null != notNowBtn) {
+        //    notNowBtn.click();
+        //    TotoroUtils.sleep(1000);
+        //}
+        //
+        //WebElement successConfirmBtn = waitForElement(driver, "确定", 3);
+        //if (null != successConfirmBtn) {
+        //    successConfirmBtn.click();
+        //    TotoroUtils.sleep(1000);
+        //}
+        //
+        //WebElement loginStatusConfirmBtn = waitForElement(driver, "确定", 3);
+        //if (null != loginStatusConfirmBtn) {
+        //    loginStatusConfirmBtn.click();
+        //    TotoroUtils.sleep(1000);
+        //}
+        //
+        //driver.back();
+        //TotoroUtils.sleep(1000);
 
         if (!YoukuLogin.YoukuLoginIPhone(driver, ACCOUNT_EMAIL, ACCOUNT_SECRET)) {
             logger.warn("ui自动化登录失败");

@@ -34,8 +34,6 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             return;
         }
 
-        ArrayList<String> accountAndSecret = getRandomVipAccount();
-
         try {
             Login.login(driver, itamiBaseCase, ACCOUNT_HAVANA_ID, ACCOUNT_SSO_KEY);
         } catch (Exception e) {
