@@ -131,6 +131,7 @@ public class YoukuLogin {
 
     public static boolean YoukuLoginIPhone(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
         boolean result = true;
+
         TotoroUtils.sleep( 5000 );
         WebElement UserCenterButton = driver.findElementByName( "我的" );
         UserCenterButton.click();
