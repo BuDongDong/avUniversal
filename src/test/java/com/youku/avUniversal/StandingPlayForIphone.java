@@ -46,16 +46,10 @@ public class StandingPlayForIphone extends PlayerBaseCase {
 
         }
 
-        try {
-            driver.findElementByName( "现在不" ).click();
-        } catch (Exception e) {
-            System.out.println( "未找到对应按钮" );
-        }
-        try {
-            driver.findElementByName( "暂不需要绑定" ).click();
-        } catch (Exception e) {
-
-            System.out.println( "未找到对应按钮" );
+        WebElement noNowConfirmBtn = waitForElement(driver, "现在不", 2);
+        if (null != noNowConfirmBtn) {
+            noNowConfirmBtn.click();
+            TotoroUtils.sleep(1000);
         }
 
         WebElement successConfirmBtn = waitForElement(driver, "确定", 2);
