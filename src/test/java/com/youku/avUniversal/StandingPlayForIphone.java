@@ -46,18 +46,22 @@ public class StandingPlayForIphone extends PlayerBaseCase {
 
         }
 
+        TotoroUtils.sleep(5000);
+
         WebElement noNowConfirmBtn = waitForElement(driver, "现在不", 2);
         if (null != noNowConfirmBtn) {
             noNowConfirmBtn.click();
             TotoroUtils.sleep(1000);
         }
 
+        TotoroUtils.sleep(5000);
         WebElement successConfirmBtn = waitForElement(driver, "确定", 2);
         if (null != successConfirmBtn) {
             successConfirmBtn.click();
             TotoroUtils.sleep(1000);
         }
 
+        TotoroUtils.sleep(5000);
         WebElement loginStatusConfirmBtn = waitForElement(driver, "确定", 2);
         if (null != loginStatusConfirmBtn) {
             loginStatusConfirmBtn.click();
