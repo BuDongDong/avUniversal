@@ -54,14 +54,14 @@ public class StandingPlayForIphone extends PlayerBaseCase {
         }
 
         TotoroUtils.sleep(5000);
-        logger.warn("免密登录后尝试点击'确定'");
+        logger.warn("免密登录后尝试点击'确定1'");
         element = driver.findElementWithoutExp(By.name("确定"));
         if (element != null) {
             element.click();
         }
 
         TotoroUtils.sleep(5000);
-        logger.warn("免密登录后尝试点击'确定'");
+        logger.warn("免密登录后尝试点击'确定2'");
         element = driver.findElementWithoutExp(By.name("确定"));
         if (element != null) {
             element.click();
