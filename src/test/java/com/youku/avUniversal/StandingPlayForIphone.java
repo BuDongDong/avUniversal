@@ -6,6 +6,7 @@ import com.youku.avUniversal.Utils.YoukuLogin;
 import com.youku.itami.utility.Login.Login;
 import com.youku.itami.utility.OssUpload.FileTypeEnum;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,24 +49,24 @@ public class StandingPlayForIphone extends PlayerBaseCase {
 
         TotoroUtils.sleep(5000);
 
-        WebElement noNowConfirmBtn = waitForElement(driver, "现在不", 2);
-        if (null != noNowConfirmBtn) {
-            noNowConfirmBtn.click();
-            TotoroUtils.sleep(1000);
+
+        WebElement element = driver.findElementWithoutExp(By.name("现在不"));
+        if (element != null) {
+            element.click();
         }
 
         TotoroUtils.sleep(5000);
-        WebElement successConfirmBtn = waitForElement(driver, "确定", 2);
-        if (null != successConfirmBtn) {
-            successConfirmBtn.click();
-            TotoroUtils.sleep(1000);
+
+        element = driver.findElementWithoutExp(By.name("确定"));
+        if (element != null) {
+            element.click();
         }
 
         TotoroUtils.sleep(5000);
-        WebElement loginStatusConfirmBtn = waitForElement(driver, "确定", 2);
-        if (null != loginStatusConfirmBtn) {
-            loginStatusConfirmBtn.click();
-            TotoroUtils.sleep(1000);
+
+        element = driver.findElementWithoutExp(By.name("确定"));
+        if (element != null) {
+            element.click();
         }
 
         driver.back();
