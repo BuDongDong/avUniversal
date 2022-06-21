@@ -39,6 +39,7 @@ public class StandingPlayForIphone extends PlayerBaseCase {
         logger.warn("关闭app");
         driver.launchApp(DEVICE.getPackageName());
         TotoroUtils.sleep(5000);
+        System.out.println("auto login before");
 
         try {
             Login.login(driver, itamiBaseCase, ACCOUNT_HAVANA_ID, ACCOUNT_SSO_KEY);
@@ -46,6 +47,7 @@ public class StandingPlayForIphone extends PlayerBaseCase {
             logger.warn("免密登录失败, 尝试ui登录");
 
         }
+        System.out.println("auto login after");
         TotoroUtils.sleep(5000);
         logger.warn("免密登录后尝试点击'现在不'");
         WebElement element = driver.findElementWithoutExp(By.name("现在不"));
