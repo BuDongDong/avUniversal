@@ -129,6 +129,21 @@ public class YoukuLogin {
         return result;
     }
 
+    public static boolean youkuIphoneIsLogin(MobileDriver<WebElement> driver) {
+        try {
+            WebElement UserCenterButton = driver.findElementByName("我的");
+            UserCenterButton.click();
+            TotoroUtils.sleep(2000);
+            WebElement LoginButton = driver.findElementByName("登录/注册");
+            LoginButton.click();
+        } catch (Exception e) {
+            System.out.println("未找到登录/注册");
+            return true;
+        }
+        TotoroUtils.sleep(2000);
+        return false;
+    }
+
     public static boolean YoukuLoginIPhone(MobileDriver<WebElement> driver, String accountNumber, String scretNumber) {
         boolean result = true;
 

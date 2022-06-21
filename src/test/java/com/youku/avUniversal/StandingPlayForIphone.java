@@ -1,5 +1,9 @@
 package com.youku.avUniversal;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.CmdExecutor;
 import com.youku.avUniversal.Utils.YoukuLogin;
@@ -10,11 +14,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * @author 庭婳（meifang.ymf@alibaba-inc.com）
@@ -39,38 +38,40 @@ public class StandingPlayForIphone extends PlayerBaseCase {
         logger.warn("关闭app");
         driver.launchApp(DEVICE.getPackageName());
         TotoroUtils.sleep(5000);
-        System.out.println("auto login before");
 
-        try {
-            Login.login(driver, itamiBaseCase, ACCOUNT_HAVANA_ID, ACCOUNT_SSO_KEY);
-        } catch (Exception e) {
-            logger.warn("免密登录失败, 尝试ui登录");
+        if (!YoukuLogin.youkuIphoneIsLogin(driver)) {
+            System.out.println("auto login before");
+            try {
+                Login.login(driver, itamiBaseCase, ACCOUNT_HAVANA_ID, ACCOUNT_SSO_KEY);
+            } catch (Exception e) {
+                logger.warn("免密登录失败, 尝试ui登录");
 
+            }
+            System.out.println("auto login after");
+            TotoroUtils.sleep(5000);
+            logger.warn("免密登录后尝试点击'现在不'");
+            WebElement element = driver.findElementWithoutExp(By.name("现在不"));
+            if (element != null) {
+                element.click();
+            }
+
+            TotoroUtils.sleep(5000);
+            logger.warn("免密登录后尝试点击'确定1'");
+            element = driver.findElementWithoutExp(By.name("确定"));
+            if (element != null) {
+                element.click();
+            }
+
+            TotoroUtils.sleep(5000);
+            logger.warn("免密登录后尝试点击'确定2'");
+            element = driver.findElementWithoutExp(By.name("确定"));
+            if (element != null) {
+                element.click();
+            }
+
+            driver.back();
+            TotoroUtils.sleep(1000);
         }
-        System.out.println("auto login after");
-        TotoroUtils.sleep(5000);
-        logger.warn("免密登录后尝试点击'现在不'");
-        WebElement element = driver.findElementWithoutExp(By.name("现在不"));
-        if (element != null) {
-            element.click();
-        }
-
-        TotoroUtils.sleep(5000);
-        logger.warn("免密登录后尝试点击'确定1'");
-        element = driver.findElementWithoutExp(By.name("确定"));
-        if (element != null) {
-            element.click();
-        }
-
-        TotoroUtils.sleep(5000);
-        logger.warn("免密登录后尝试点击'确定2'");
-        element = driver.findElementWithoutExp(By.name("确定"));
-        if (element != null) {
-            element.click();
-        }
-
-        driver.back();
-        TotoroUtils.sleep(1000);
 
         if (!YoukuLogin.YoukuLoginIPhone(driver, ACCOUNT_EMAIL, ACCOUNT_SECRET)) {
             logger.warn("ui自动化登录失败");
