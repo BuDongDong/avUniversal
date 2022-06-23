@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.youku.yk_client_arch</groupId>
             <artifactId>itami_framework</artifactId>
-            <version>2.2.22.5-SNAPSHOT</version>
+            <version>2.2.23.38-SNAPSHOT</version>
             <!--            <version>2.2.21.73-SNAPSHOT</version>-->
             <exclusions>
                 <exclusion>
