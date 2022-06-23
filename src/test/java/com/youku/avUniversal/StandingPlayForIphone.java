@@ -31,8 +31,11 @@ public class StandingPlayForIphone extends PlayerBaseCase {
             return;
         }
 
-        WebElement UserCenterButton = driver.findElementByName("我的");
-        UserCenterButton.click();
+        try {
+            WebElement UserCenterButton = driver.findElementByName("我的");
+            UserCenterButton.click();
+        } catch (Exception e) {
+        }
         TotoroUtils.sleep(2000);
         driver.closeApp(DEVICE.getPackageName());
         logger.warn("关闭app");
