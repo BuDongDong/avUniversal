@@ -26,6 +26,7 @@ public class Constant {
     public static final String MOBIZEN_RECORD_BUTTON = "com.rsupport.mvagent:id/iv_record";
     public static final String MOBIZEN_STOP_BUTTON = "com.rsupport.mvagent:id/iv_icon_stop";
     public static final String MOBIZEN_CLOSE_BUTTON = "android:id/button2";
+    public static final String MOBIZEN_CONFIRM_BUTTON = "android:id/button1";
 
     //    public static final String YOUKU_WELCOME_ACTIVITY =
     //    public static final String TENCENT_WELCOME_ACTIVITY = "com.tencent.qqlive/com.tencent.qqlive.ona.activity.SplashHomeActivity";
