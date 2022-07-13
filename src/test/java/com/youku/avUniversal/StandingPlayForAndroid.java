@@ -84,6 +84,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 folder.mkdirs();
             }
 
+            driver.unRegisterUIWatcher("LiveWatcher");//注销watcher
             if (openMobizen == 1) {
                 ADBCommandUtils.exec(DEVICE.getDeviceId(), "shell", "rm", "-r", "/sdcard/Movies/Mobizen");
                 TotoroUtils.sleep(1000);

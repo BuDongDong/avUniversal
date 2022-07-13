@@ -131,7 +131,6 @@ public class PlayerBaseCase extends ItamiBaseCase {
         }
 
         super.before();
-        driver.unRegisterUIWatcher("LiveWatcher");//注销watcher
 
         //TotoroUtils.sleep(1000 * 60);
 
