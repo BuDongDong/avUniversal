@@ -61,49 +61,6 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                     ADBCommandUtils.exec(DEVICE.getDeviceId(), "shell", "am", "force-stop", "com.rsupport.mvagent");
                     ADBCommandUtils.exec(DEVICE.getDeviceId(), "shell", "monkey", "-p", "com.rsupport.mvagent", "1");
                     TotoroUtils.sleep(2000);
-                    mobizen_home = waitForElement(driver, Constant.MOBIZEN_HOME_BUTTON, 4);
-                    if (mobizen_home != null) {
-                        mobizen_home.click();
-                        TotoroUtils.sleep(1000);
-                        WebElement mobizen_record = waitForElement(driver, Constant.MOBIZEN_RECORD_BUTTON, 4);
-                        if (mobizen_record != null) {
-                            mobizen_record.click();
-                            logger.warn("开始使用mobizen录屏");
-                        } else {
-                            logger.error("录屏准备异常");
-                        }
-                        TotoroUtils.sleep(2000);
-                        WebElement mobizen_confirm = waitForElement(driver, Constant.MOBIZEN_CONFIRM_BUTTON, 4);
-                        if (mobizen_confirm != null) {
-                            mobizen_confirm.click();
-                            logger.warn("mobizen录屏准备结束");
-                        }
-                        TotoroUtils.sleep(5000);
-                        mobizen_home = waitForElement(driver, Constant.MOBIZEN_HOME_BUTTON, 4);
-                        if (mobizen_home != null) {
-                            mobizen_home.click();
-                        } else {
-                            logger.error("录屏准备异常");
-                        }
-                        TotoroUtils.sleep(1000);
-                        WebElement mobizen_stop = waitForElement(driver, Constant.MOBIZEN_STOP_BUTTON, 4);
-                        if (mobizen_stop != null) {
-                            mobizen_stop.click();
-                        } else {
-                            logger.error("录屏准备异常");
-                        }
-                        TotoroUtils.sleep(1000);
-                        WebElement mobizen_close = waitForElement(driver, Constant.MOBIZEN_CLOSE_BUTTON, 4);
-                        if (mobizen_close != null && (mobizen_close.getText().contains("关闭") || mobizen_close.getText()
-                            .contains("以后再说"))) {
-                            mobizen_close.click();
-                            logger.warn("关闭录屏");
-                        } else {
-                            logger.error("录屏准备异常");
-                        }
-                    } else {
-                        logger.error("录屏准备失败");
-                    }
                 }
             }
             TotoroUtils.sleep(3000);

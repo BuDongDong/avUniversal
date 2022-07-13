@@ -78,9 +78,9 @@ public class PlayerBaseCase extends ItamiBaseCase {
     static {
         //DEVICE = new IPhoneDevice( null, null );
         //logger.warn( "尝试查找iphone设备: " + DEVICE.getDeviceId() );
-        //DEVICE = new AndroidDevice(null, null, null);
-        //logger.warn("尝试查找android设备: " + DEVICE.getDeviceId());
-        //Permission.permissionYouku(DEVICE.getDeviceId(), DEVICE.getPackageName());
+        DEVICE = new AndroidDevice(null, null, null);
+        logger.warn("尝试查找android设备: " + DEVICE.getDeviceId());
+        Permission.permissionYouku(DEVICE.getDeviceId(), DEVICE.getPackageName());
     }
 
     public final static HashMap<String, String> VIP_ACCOUNT = new HashMap<String, String>() {{

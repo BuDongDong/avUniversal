@@ -7,19 +7,19 @@
 <!--        <deviceId>XWN0220C15058286</deviceId>-->
 <!--        <activity>ActivityWelcome</activity>-->
 <!--    </device>-->
-<!--    <device>-->
-<!--        <platform>ANDROID</platform>-->
-<!--        <deviceType>Android</deviceType>-->
-<!--        <packageName>com.youku.phone</packageName>-->
-<!--        <deviceId>8ef91ebc</deviceId>-->
-<!--        <activity>ActivityWelcome</activity>-->
-<!--    </device>-->
     <device>
-        <platform>ios</platform>
-        <deviceType>iPhone</deviceType>
-        <deviceId>00008030-000A294E3604802E</deviceId>
-        <packageName>com.youku.YouKu.InHouse</packageName>
+        <platform>ANDROID</platform>
+        <deviceType>Android</deviceType>
+        <packageName>com.youku.phone</packageName>
+        <deviceId>8ef91ebc</deviceId>
+        <activity>ActivityWelcome</activity>
     </device>
+<!--    <device>-->
+<!--        <platform>ios</platform>-->
+<!--        <deviceType>iPhone</deviceType>-->
+<!--        <deviceId>00008030-000A294E3604802E</deviceId>-->
+<!--        <packageName>com.youku.YouKu.InHouse</packageName>-->
+<!--    </device>-->
     <!--<device>-->
     <!--<platform>ios</platform>-->
     <!--<deviceType>iPad</deviceType>-->
