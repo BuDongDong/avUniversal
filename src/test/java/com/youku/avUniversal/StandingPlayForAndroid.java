@@ -1,10 +1,12 @@
 package com.youku.avUniversal;
 
+import com.totoro.client.deeplearning.adstract.OcrElement;
 import com.totoro.client.utils.ADBCommandUtils;
 import com.totoro.client.utils.TotoroUtils;
 import com.youku.avUniversal.Utils.CmdExecutor;
 import com.youku.avUniversal.Utils.Constant;
 import com.youku.avUniversal.Utils.YoukuLogin;
+import com.youku.itami.utility.ImgHandler.ImageML.ImageML;
 import com.youku.itami.utility.Login.Login;
 import com.youku.itami.utility.OssUpload.FileTypeEnum;
 import org.junit.Test;
@@ -141,10 +143,14 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                     mobizen_record.click();
                     logger.warn("开始使用mobizen录屏");
                     TotoroUtils.sleep(2000);
-                    WebElement mobizen_confirm = waitForElement(driver, Constant.MOBIZEN_CONFIRM_BUTTON, 4);
-                    if (mobizen_confirm != null) {
-                        mobizen_confirm.click();
-                        logger.warn("正式开始使用mobizen录屏");
+                    try {
+                        OcrElement ocr = ImageML.itamiOcrElement( "立即开始" );
+                        if (ocr != null) {
+                            driver.click( ocr.getX(), ocr.getY() );
+                            logger.warn("正式开始使用mobizen录屏");
+                        }
+                    } catch (Exception e) {
+                        logger.warn("已使用mobizen开始录屏");
                     }
                     TotoroUtils.sleep(duration * 1000);
                 } else {
