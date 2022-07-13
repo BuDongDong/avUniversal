@@ -101,14 +101,10 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                     mobizen_record.click();
                     logger.warn("开始使用mobizen录屏");
                     TotoroUtils.sleep(2000);
-                    try {
-                        OcrElement ocr = ImageML.itamiOcrElement( "立即开始" );
-                        if (ocr != null) {
-                            driver.click( ocr.getX(), ocr.getY() );
-                            logger.warn("正式开始使用mobizen录屏");
-                        }
-                    } catch (Exception e) {
-                        logger.warn("已使用mobizen开始录屏");
+                    WebElement mobizen_confirm = waitForElement(driver, Constant.MOBIZEN_CONFIRM_BUTTON, 4);
+                    if (mobizen_confirm != null) {
+                        mobizen_confirm.click();
+                        logger.warn("正式开启开始使用mobizen录屏");
                     }
                     TotoroUtils.sleep(duration * 1000);
                 } else {
