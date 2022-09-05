@@ -135,7 +135,7 @@ public class YoukuLogin {
     public static boolean youkuIphoneIsLogin(MobileDriver<WebElement> driver) {
         try {
             OcrElement ocr = ImageML.itamiOcrElement("我的");
-            driver.click(ocr.getX(), ocr.getY());
+            ocr.click(driver);
             TotoroUtils.sleep(2000);
             WebElement LoginButton = driver.findElementByName("登录/注册");
             LoginButton.click();
@@ -153,7 +153,7 @@ public class YoukuLogin {
         TotoroUtils.sleep(5000);
         try {
             OcrElement ocr = ImageML.itamiOcrElement("我的");
-            driver.click(ocr.getX(), ocr.getY());
+            ocr.click(driver);
         } catch (Exception e) {
             System.out.println("没有找到'我的'");
         }
@@ -168,7 +168,7 @@ public class YoukuLogin {
         TotoroUtils.sleep(2000);
 
         try {
-            WebElement unChoose = driver.findElementByName("未勾选");
+            WebElement unChoose = driver.findElementByName("未选定，复选框");
             unChoose.click();
             logger.warn("已勾选隐私权限");
         } catch (Exception e) {
@@ -176,48 +176,62 @@ public class YoukuLogin {
         }
 
         TotoroUtils.sleep(2000);
-
-        WebElement QQLoginButton = null;
         try {
-            QQLoginButton = driver.findElementByName("手机号登录");
-            QQLoginButton.click();
-            logger.warn("已点击：手机号登录");
-            TotoroUtils.sleep(2000);
+            WebElement moreLogin = driver.findElementByName("更多登录方式");
+            moreLogin.click();
+            logger.warn("更多登录方式");
         } catch (Exception e) {
-            logger.warn("未发现'手机号登录'按钮");
-            try {
-                QQLoginButton = driver.findElementByName("更多方式登录");
-                QQLoginButton.click();
-                TotoroUtils.sleep(2000);
-                QQLoginButton = driver.findElementByName("短信登录");
-                if (QQLoginButton != null) {
-                    QQLoginButton.click();
-                    TotoroUtils.sleep(2000);
-                }
-            } catch (Exception ee) {
-                logger.warn("未发现'更多方式登录'按钮");
-                try {
-                    OcrElement ocr = ImageML.itamiOcrElement("更多方式登录");
-                    driver.click(ocr.getX(), ocr.getY());
-                    TotoroUtils.sleep(2000);
-                    QQLoginButton = driver.findElementByName("短信登录");
-                    if (QQLoginButton != null) {
-                        QQLoginButton.click();
-                        TotoroUtils.sleep(2000);
-                    }
-                } catch (Exception eee) {
-                    logger.warn("ocr也未找到'更多方式登录'");
-                    try {
-                        QQLoginButton = driver.findElementByName("账号密码登录");
-                        QQLoginButton.click();
-                        TotoroUtils.sleep(2000);
-                        logger.warn("尝试点击'账号密码登录'");
-                    } catch (Exception eeee) {
-                        logger.warn("没有找到'账号密码登录'");
-                    }
-                }
+            OcrElement ocr = ImageML.itamiOcrElement("更多方式登录");
+            if (ocr != null) {
+                ocr.click(driver);
+                logger.warn("ocr更多登录方式");
+            } else {
+                logger.warn("未找到'更多登录方式'");
             }
         }
+        TotoroUtils.sleep(2000);
+
+        //WebElement QQLoginButton = null;
+        //try {
+        //    QQLoginButton = driver.findElementByName("手机号登录");
+        //    QQLoginButton.click();
+        //    logger.warn("已点击：手机号登录");
+        //    TotoroUtils.sleep(2000);
+        //} catch (Exception e) {
+        //    logger.warn("未发现'手机号登录'按钮");
+        //    try {
+        //        QQLoginButton = driver.findElementByName("更多方式登录");
+        //        QQLoginButton.click();
+        //        TotoroUtils.sleep(2000);
+        //        QQLoginButton = driver.findElementByName("短信登录");
+        //        if (QQLoginButton != null) {
+        //            QQLoginButton.click();
+        //            TotoroUtils.sleep(2000);
+        //        }
+        //    } catch (Exception ee) {
+        //        logger.warn("未发现'更多方式登录'按钮");
+        //        try {
+        //            OcrElement ocr = ImageML.itamiOcrElement("更多方式登录");
+        //            driver.click(ocr.getX(), ocr.getY());
+        //            TotoroUtils.sleep(2000);
+        //            QQLoginButton = driver.findElementByName("短信登录");
+        //            if (QQLoginButton != null) {
+        //                QQLoginButton.click();
+        //                TotoroUtils.sleep(2000);
+        //            }
+        //        } catch (Exception eee) {
+        //            logger.warn("ocr也未找到'更多方式登录'");
+        //            try {
+        //                QQLoginButton = driver.findElementByName("账号密码登录");
+        //                QQLoginButton.click();
+        //                TotoroUtils.sleep(2000);
+        //                logger.warn("尝试点击'账号密码登录'");
+        //            } catch (Exception eeee) {
+        //                logger.warn("没有找到'账号密码登录'");
+        //            }
+        //        }
+        //    }
+        //}
 
         try {
             WebElement AccountLoginButton = driver.findElementByName("账号密码登录");

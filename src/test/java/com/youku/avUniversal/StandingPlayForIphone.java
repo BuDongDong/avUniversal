@@ -48,32 +48,9 @@ public class StandingPlayForIphone extends PlayerBaseCase {
                 Login.login(driver, itamiBaseCase, ACCOUNT_HAVANA_ID, ACCOUNT_SSO_KEY);
             } catch (Exception e) {
                 logger.warn("免密登录失败, 尝试ui登录");
-
             }
             System.out.println("auto login after");
             TotoroUtils.sleep(5000);
-            logger.warn("免密登录后尝试点击'现在不'");
-            WebElement element = driver.findElementWithoutExp(By.name("现在不"));
-            if (element != null) {
-                element.click();
-            }
-
-            TotoroUtils.sleep(5000);
-            logger.warn("免密登录后尝试点击'确定1'");
-            element = driver.findElementWithoutExp(By.name("确定"));
-            if (element != null) {
-                element.click();
-            }
-
-            TotoroUtils.sleep(5000);
-            logger.warn("免密登录后尝试点击'确定2'");
-            element = driver.findElementWithoutExp(By.name("确定"));
-            if (element != null) {
-                element.click();
-            }
-
-            driver.back();
-            TotoroUtils.sleep(1000);
         }
 
         if (!YoukuLogin.YoukuLoginIPhone(driver, ACCOUNT_EMAIL, ACCOUNT_SECRET)) {
