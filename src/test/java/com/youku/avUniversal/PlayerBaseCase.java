@@ -597,7 +597,7 @@ public class PlayerBaseCase extends ItamiBaseCase {
         while (times > 0) {
             driver.click(200, 200);
             TotoroUtils.sleep(1000);
-            WebElement barrageBtn = waitForElement(driver, "开启弹幕，按钮", 4);
+            WebElement barrageBtn = waitForElement(driver, "关闭弹幕", 4);
             if (barrageBtn != null) {
                 barrageBtn.click();
                 break;
