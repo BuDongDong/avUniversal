@@ -95,7 +95,7 @@ public class StandingPlayForIphone extends PlayerBaseCase {
             StringBuilder output = new StringBuilder();
             int exitCode = cmdExecutor.execCmd(cmd.split(" "), output, duration);
             if (output.toString().contains("Device not found")) {
-                String[] quicktime_args = {"/usr/bin/osascript", "/Users/yktest/av-test"};
+                String[] quicktime_args = {"/usr/bin/osascript", "/Users/yktest/av-test/prepare_quicktime.scpt"};
                 cmdExecutor.execCmd(quicktime_args, null, 15);
                 cmdExecutor.execCmd(cmd.split(" "), output, duration);
             }
