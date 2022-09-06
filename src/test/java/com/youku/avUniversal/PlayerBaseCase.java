@@ -34,6 +34,8 @@ import com.youku.itami.utility.ImgHandler.ImageML.ImageML;
 import com.youku.itami.utility.Login.Login;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
+import org.junit.rules.Timeout;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Rectangle;
 import org.openqa.selenium.WebElement;
@@ -43,6 +45,8 @@ import org.slf4j.LoggerFactory;
 public class PlayerBaseCase extends ItamiBaseCase {
 
     private static Logger logger = LoggerFactory.getLogger(PlayerBaseCase.class);
+    @Rule
+    public Timeout timeout = new Timeout(6000 * 1000);
 
     public String exeId = "null";
     public String testApp = "优酷";
