@@ -23,6 +23,7 @@ public class Constant {
     public static final String LOGIN_ANDROID_YOUKU_PWD = "13691070695youku";
 
     public static final String MOBIZEN_HOME_BUTTON = "com.rsupport.mvagent:id/iv_button";
+    public static final String MOBIZEN_RECORD_READY = "com.rsupport.mvagent:id/iv_ready";
     public static final String MOBIZEN_RECORD_BUTTON = "com.rsupport.mvagent:id/iv_record";
     public static final String MOBIZEN_STOP_BUTTON = "com.rsupport.mvagent:id/iv_icon_stop";
     public static final String MOBIZEN_CLOSE_BUTTON = "android:id/button2";
