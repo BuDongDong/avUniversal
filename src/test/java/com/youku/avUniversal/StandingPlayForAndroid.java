@@ -145,6 +145,8 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
             driver.unRegisterUIWatcher("LiveWatcher");//注销watcher
             if (openMobizen == 1) {
                 ADBCommandUtils.exec(DEVICE.getDeviceId(), "shell", "rm", "-r", "/sdcard/Movies/Mobizen");
+                ADBCommandUtils.exec(DEVICE.getDeviceId(), "shell", "rm", "-r", "/sdcard/Mobizen");
+
                 TotoroUtils.sleep(1000);
 
                 WebElement mobizen_home = waitForElement(driver, Constant.MOBIZEN_HOME_BUTTON, 4);
@@ -217,6 +219,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 if (!tmpFolder.exists() || !tmpFolder.isDirectory()) {
                     tmpFolder.mkdirs();
                 }
+                ADBCommandUtils.exec(DEVICE.getDeviceId(), "pull", "/sdcard/Movies/Mobizen", tmpDirectory);
                 ADBCommandUtils.exec(DEVICE.getDeviceId(), "pull", "/sdcard/Movies/Mobizen", tmpDirectory);
                 String mobizenDirectory = tmpDirectory + "Mobizen/";
                 File mobizenFolder = new File(mobizenDirectory);
