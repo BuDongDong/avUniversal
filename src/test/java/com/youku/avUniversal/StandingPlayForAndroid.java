@@ -74,6 +74,11 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                         mobizen_record.click();
                         logger.warn("尝试开始使用mobizen录屏");
                         TotoroUtils.sleep(2000);
+                        WebElement mobizen_confirm = waitForElement(driver, Constant.MOBIZEN_CONFIRM_BUTTON, 4);
+                        if (mobizen_confirm != null) {
+                            mobizen_confirm.click();
+                            logger.warn("尝试正式开启开始使用mobizen录屏");
+                        }
                     } else {
                         WebElement mobizen_ready = waitForElement(driver, Constant.MOBIZEN_RECORD_READY, 4);
                         if (mobizen_ready != null) {
@@ -153,17 +158,23 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                 WebElement mobizen_record = waitForElement(driver, Constant.MOBIZEN_RECORD_BUTTON, 4);
                 if (mobizen_record != null) {
                     mobizen_record.click();
-                    logger.warn("尝试开始使用mobizen录屏");
+                    logger.warn("开始使用mobizen录屏");
+                    TotoroUtils.sleep(2000);
+                    WebElement mobizen_confirm = waitForElement(driver, Constant.MOBIZEN_CONFIRM_BUTTON, 4);
+                    if (mobizen_confirm != null) {
+                        mobizen_confirm.click();
+                        logger.warn("正式开启开始使用mobizen录屏");
+                    }
                 } else {
                     WebElement mobizen_ready = waitForElement(driver, Constant.MOBIZEN_RECORD_READY, 4);
                     if (mobizen_ready != null) {
                         mobizen_ready.click();
-                        logger.warn("尝试开始使用mobizen录屏2");
+                        logger.warn("开始使用mobizen录屏2");
                         TotoroUtils.sleep(2000);
                         WebElement mobizen_confirm = waitForElement(driver, Constant.MOBIZEN_CONFIRM_BUTTON, 4);
                         if (mobizen_confirm != null) {
                             mobizen_confirm.click();
-                            logger.warn("尝试正式开启开始使用mobizen录屏");
+                            logger.warn("正式开启开始使用mobizen录屏");
                         }
                     } else {
                         logger.warn("尝试录屏异常22");
