@@ -220,7 +220,7 @@ public class StandingPlayForAndroid extends PlayerBaseCase {
                     tmpFolder.mkdirs();
                 }
                 ADBCommandUtils.exec(DEVICE.getDeviceId(), "pull", "/sdcard/Movies/Mobizen", tmpDirectory);
-                ADBCommandUtils.exec(DEVICE.getDeviceId(), "pull", "/sdcard/Movies/Mobizen", tmpDirectory);
+                ADBCommandUtils.exec(DEVICE.getDeviceId(), "pull", "/sdcard/Mobizen", tmpDirectory);
                 String mobizenDirectory = tmpDirectory + "Mobizen/";
                 File mobizenFolder = new File(mobizenDirectory);
                 if (mobizenFolder.exists()) {
